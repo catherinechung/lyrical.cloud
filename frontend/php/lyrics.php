@@ -22,6 +22,10 @@ function findLyrics($artist, $track) {
   return $lyrics;
 }
 
-findLyrics('justinbeiber', 'baby');
+$track = $_POST['songNameData'];
+$artist= $_POST['artistData'];
+$lyrics = findLyrics($artist, $track);
+
+echo $lyrics;
 
 ?>
