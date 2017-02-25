@@ -24,15 +24,16 @@ $(document).ready(function() {
           var item = document.createElement('li');
 
           // create the anchor item
-          var a = document.createElement('a');
-          //a.setAttribute('href', "https://www.google.com");
-          item.addEventListener("click", loadSongLyricsPage());
+          //var a = document.createElement('a');
 
           // Set its contents
-          a.textContent = array1[i] +" " + "(" + array2[i] + ")";
+          //a.textContent = array1[i] +" " + "(" + array2[i] + ")";
 
-          // create link to lyrics
-          item.appendChild(a);
+          //item.appendChild(a);
+          item.appendChild(document.createTextNode(array1[i] +" " + "(" + array2[i] + ")"));
+
+          // Create link to respective lyrics page
+          item.addEventListener("click", loadSongLyricsPage(this), false);
 
           // Add it to the list
           list.appendChild(item);
@@ -49,14 +50,17 @@ $(document).ready(function() {
 
 /* Back button, returns to Word Cloud Page */
 function returnWordCloud() {
-    window.location.href = "wordCloud.html";
+    window.location.href = "index.html";
 }
 
 // pass song, word, and artist to lyrics page
-function loadSongLyricsPage() {
-  localStorage.setItem('songName', 'Closer');
-  localStorage.setItem('word', 'I');
-  localStorage.setItem('artist', 'Chainsmokers');
+function loadSongLyricsPage(string) {
+  return function(event) {
+    var li = event.target;
+  localStorage.setItem('songName', 'One Dance');
+  localStorage.setItem('word', 'one');
+  localStorage.setItem('artist', 'Drake');
 
   window.location.href = "lyrics.html";
+}
 }
