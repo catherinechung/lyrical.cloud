@@ -6,6 +6,7 @@
 <head>
     <meta charset = "utf-8">
     <title>lyrical.cloud</title>
+    <meta charset="UTF-8">
     <!-- link CSS -->
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
@@ -15,6 +16,9 @@
     <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
     <script src="js/index.js"></script>
+    <script type="text/javascript" src="bower_components/d3/d3.js"></script>
+    <script type="text/javascript" src="bower_components/d3-cloud/d3.layout.cloud.js"></script>
+    <script type="text/javascript" src="js/words.js"></script>
 </head>
 
 <!-- Body -->
@@ -34,6 +38,9 @@
 
     <!-- Logo -->
     <h1>lyrical.cloud</h1>
+
+    <div id="vis"></div>
+    <script type="text/javascript" src="js/word-cloud.js"></script>
 
     <div class="search-wrapper">
         <div class="row center-xs">
