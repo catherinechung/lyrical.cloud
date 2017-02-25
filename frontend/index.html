@@ -4,10 +4,17 @@
 <!-- Head -->
 
 <head>
+    <meta charset = "utf-8">
     <title>lyrical.cloud</title>
     <!-- link CSS -->
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+    <script src="js/jquery.js"></script>
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+    <script src="js/index.js"></script>
 </head>
 
 <!-- Body -->
@@ -24,8 +31,6 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
-    <script src="js/jquery.js"></script>
-    <script src="js/index.js"></script>
 
     <!-- Logo -->
     <h1>lyrical.cloud</h1>
@@ -33,9 +38,8 @@
     <div class="search-wrapper">
         <div class="row center-xs">
             <div class="col-xs-4">
-              <div class='suggest-holder'>
-                <input id="artistName" type="text" name="focus" required class="search-box" placeholder="Search Artist" />
-                <div class="results results_lot_number"></div>
+              <div class = "ui-widget">
+                <input id="automplete-1" type="text" name="focus" required class="search-box" placeholder="Search Artist"/>
               </div>
             </div>
         </div>
