@@ -4,7 +4,7 @@ var song = {name:"One Dance", artist:"Drake", lyrics:"Baby I like your style \r\
 
 document.onreadystatechange = function () {
     if (document.readyState == "complete") {
-     document.title = song.name + "by" + song.artist;
+     document.title = song.name + " by " + song.artist;
      document.getElementById("title").innerHTML = song.name + " by " + song.artist;
 
      var lyrics = song.lyrics;
@@ -12,7 +12,5 @@ document.onreadystatechange = function () {
 	 var regex = new RegExp('('+song.word+')', 'ig');
      lyrics = lyrics.replace(regex, '<span class="highlight">$1</span>');
      document.getElementById("lyrics").innerHTML = lyrics;
-
-
    }
 }
