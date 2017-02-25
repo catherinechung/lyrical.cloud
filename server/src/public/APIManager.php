@@ -1,0 +1,64 @@
+<?php
+	class APIManager {
+
+		# musixmatch
+		private $mmAPI = 'http://api.musixmatch.com/ws/1.1/';
+		private $mmKey = '&apikey=a820a7147e13aa7c816324dc7c2c57b9';
+
+		# spotify
+		private $spAPI = 'https://api.spotify.com/v1/';
+
+		# get all songs from an artist's album
+		# parameter: Spotify Album ID
+		# return: List of songs in this album
+		private function get_songs_from_album($albumID) {
+			$res = file_get_contents($this->spAPI . "/albums/" . $albumID . "/tracks/");
+			$data = json_decode($res, true);
+
+			# return $songs;
+		}
+
+		# utility function to get encoded artist id
+		# parameter: Artist Name
+		# return: Spotify Artist ID
+		private function get_artist_id($artist) {
+			$res = file_get_contents($this->spAPI . "search?q=" . $artist . "&type=artist&limit=5");
+			$data = json_decode($res, true);
+			print_r($data[artists][items]);
+			# print_r($data['artists']['items']['id']);
+			# return $id[artists][items][id];
+		}
+
+		# get all songs from an artist's discography
+		# parameter: Artist Name
+		# return: List of all songs by this artist
+		public function get_songs($artist) {
+			$id = $this->get_artist_id($artist);
+			# return $id[artists][items][id]);
+		}
+
+		# get track id, given name of artist and track
+		private function get_track_id($artist, $track) {
+			$result = file_get_contents($this->mmAPI . "track.search?q_track={$track}&q_arist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
+
+			$all_track_names = json_decode($result, true);
+  			$track_id = $all_track_names[message][body][track_list][0][track][track_id];
+
+  			return $track_id;
+		}
+
+		# get lyrics for track, given name of artist and track
+		public function get_lyrics($artist, $track) {
+			$track_id = $this->get_track_id($artist, $track);
+
+			$result = file_get_contents($this->mmAPI . "track.lyrics.get?track_id={$track_id}" . $this->mmKey);
+
+			$lyrics_json = json_decode($result, true);
+  			$lyrics = $lyrics_json[message][body][lyrics][lyrics_body];
+
+  			return $lyrics;
+		}
+
+		# merge the searched artist's discography with the current map
+	}
+?>
