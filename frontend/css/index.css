@@ -2,21 +2,11 @@ h1 {
   text-align: center;
 }
 
-#content {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 120px;
-}
-
 .search-box,.close-icon,.search-wrapper {
 	position: relative;
 	padding: 10px;
 }
-.search-wrapper {
-	width: 450px;
-	margin: auto;
-}
+
 .search-box {
 	width: 100%;
   font-size: 16px;
@@ -26,17 +16,6 @@ h1 {
 }
 .search-box:focus {
 	box-shadow: 0 0 5px 2.5px #b0e0ee;
-}
-
-.button-wrapper {
-	width: 475px;
-	margin: 0 auto;
-}
-
-.fb-share-wrapper {
-  display: inline-block;
-  margin: 0 auto;
-  float: right;
 }
 
 .btn-class {
@@ -50,14 +29,14 @@ h1 {
   font-family: Verdana;
   width: auto;
   height: auto;
-  font-size: 12px;
+  font-size: 14px;
   padding: 10px 40px;
   box-shadow: inset 1px 1px 0 0 #FFF6CE, inset 0 -1px 0 0 #E3C852, inset 0 0 0 1px #FCE88D, 0 2px 4px 0 #D4D4D4;
   -moz-box-shadow: inset 1px 1px 0 0 #FFF6CE, inset 0 -1px 0 0 #E3C852, inset 0 0 0 1px #FCE88D, 0 2px 4px 0 #D4D4D4;
   -webkit-box-shadow: inset 1px 1px 0 0 #FFF6CE, inset 0 -1px 0 0 #E3C852, inset 0 0 0 1px #FCE88D, 0 2px 4px 0 #D4D4D4;
   text-shadow: 0 1px 0 #FFFFFF;
   background-color: #499DFC;
-  
+
 }
 
 .btn-class:hover, .btn-class:active {
