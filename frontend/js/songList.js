@@ -1,18 +1,22 @@
+var word = "One";
+var artist = "Drake";
+
 $(document).ready(function() {
 
   // JSON object, parsing to get var word, also array of songs
   // parse through JSON object
 
   /* (1) Set the title of the Song List page */
-  var title = {word: "Word"};
+  //var title = {word: "One"};
+  //var artist = "Drake";
     // will parse in the word from the JSON object later (object.word)
-  document.getElementById("songListTitle").innerHTML = title.word;
+  document.getElementById("songListTitle").innerHTML = word;
 
   /* (2) Populate song list */
     // from JSON object --> object.song, object.occurences
   var songs = [
-          name = ['One Dance','Bad and Boujee', 'Shape of You', 'Chained to the Rhythm', 'Closer', 'Starboy'],
-          frequency = ['10','9','8', '7', '6', '5']
+          name = ['One Dance','Hotline Bling', 'Fake Love', 'Headlines', 'Jumpman'],
+          frequency = ['10','9','8', '7', '6']
       ];
 
   function makeOL(array1, array2) {
@@ -33,7 +37,7 @@ $(document).ready(function() {
           item.appendChild(document.createTextNode(array1[i] +" " + "(" + array2[i] + ")"));
 
           // Create link to respective lyrics page
-          item.addEventListener("click", loadSongLyricsPage(this), false);
+          item.addEventListener("click", loadSongLyricsPage(this, array1[i]), false);
 
           // Add it to the list
           list.appendChild(item);
@@ -54,12 +58,12 @@ function returnWordCloud() {
 }
 
 // pass song, word, and artist to lyrics page
-function loadSongLyricsPage(string) {
+function loadSongLyricsPage(item, song) {
   return function(event) {
     var li = event.target;
-  localStorage.setItem('songName', 'One Dance');
-  localStorage.setItem('word', 'one');
-  localStorage.setItem('artist', 'Drake');
+  localStorage.setItem('songName', song);
+  localStorage.setItem('word', word);
+  localStorage.setItem('artist', artist);
 
   window.location.href = "lyrics.html";
 }
