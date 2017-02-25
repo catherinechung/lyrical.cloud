@@ -14,7 +14,7 @@ $router->get('/api/wordcloud/new/{artist}', function (Request $request, Response
 });
 
 # get word cloud for merged set of artists (can be merged into previous route)
-$router->get('/api/wordcloud/new/{artist}' function (Request $request, Response $response) {
+$router->get('/api/wordcloud/merge/{artist}', function (Request $request, Response $response) {
 	$artist = $request->getAttribute('artist');
 	return $artist;
 });
