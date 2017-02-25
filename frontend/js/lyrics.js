@@ -3,16 +3,21 @@ var song = {name:"One Dance", artist:"Drake", lyrics:"Baby I like your style \r\
 
 
 document.onreadystatechange = function () {
+    //query musixmatch given song and artist to get lyrics
+
+    var songName = localStorage.getItem('songName');
+    var artist = localStorage.getItem('artist');
+    var word = " " + localStorage.getItem('word')+ " ";
+
+
     if (document.readyState == "complete") {
-     document.title = song.name + "by" + song.artist;
-     document.getElementById("title").innerHTML = song.name + " by " + song.artist;
+     document.title = songName + " by " + artist;
+     document.getElementById("title").innerHTML = songName + " by " + artist;
 
      var lyrics = song.lyrics;
      lyrics = lyrics.replace(/(\n|\r|\r\n)/g, "<br />");
-	 var regex = new RegExp('('+song.word+')', 'ig');
+	 var regex = new RegExp('('+word+')', 'ig');
      lyrics = lyrics.replace(regex, '<span class="highlight">$1</span>');
      document.getElementById("lyrics").innerHTML = lyrics;
-
-
    }
 }
