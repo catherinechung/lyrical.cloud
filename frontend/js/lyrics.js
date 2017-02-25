@@ -3,11 +3,11 @@ var song = {name:"One Dance", artist:"Drake", lyrics:"Baby I like your style \r\
 
 
 document.onreadystatechange = function () {
-    //query musixmatch given song and artist
+    //query musixmatch given song and artist to get lyrics
 
     var songName = localStorage.getItem('songName');
     var artist = localStorage.getItem('artist');
-    var word = localStorage.getItem('word');
+    var word = " " + localStorage.getItem('word')+ " ";
 
 
     if (document.readyState == "complete") {
