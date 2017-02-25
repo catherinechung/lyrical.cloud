@@ -25,7 +25,8 @@ $(document).ready(function() {
 
           // create the anchor item
           var a = document.createElement('a');
-          a.setAttribute('href', "https://www.google.com");
+          //a.setAttribute('href', "https://www.google.com");
+          item.addEventListener("click", loadSongLyricsPage());
 
           // Set its contents
           a.textContent = array1[i] +" " + "(" + array2[i] + ")";
