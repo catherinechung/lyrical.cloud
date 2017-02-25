@@ -4,7 +4,7 @@ $(document).ready(function() {
   // parse through JSON object
 
   /* (1) Set the title of the Song List page */
-  var title = {word: "Word"}
+  var title = {word: "Word"};
     // will parse in the word from the JSON object later (object.word)
   document.getElementById("songListTitle").innerHTML = title.word;
 
@@ -48,5 +48,14 @@ $(document).ready(function() {
 
 /* Back button, returns to Word Cloud Page */
 function returnWordCloud() {
-    window.location.href = "wordCloud.html"
+    window.location.href = "wordCloud.html";
+}
+
+// pass song, word, and artist to lyrics page
+function loadSongLyricsPage() {
+  localStorage.setItem('songName', 'Closer');
+  localStorage.setItem('word', 'I');
+  localStorage.setItem('artist', 'Chainsmokers');
+
+  window.location.href = "lyrics.html";
 }
