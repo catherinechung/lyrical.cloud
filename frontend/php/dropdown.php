@@ -16,6 +16,13 @@ function checkArtistName($array, $x) {
     		return "";
 }
 
+function checkArtistID($array, $x) {
+	if(isset($array[$x]["id"]))
+    		return $array[$x]["id"];
+    	else
+    		return "";
+}
+
 // Pass in artist name you'd like dropdown for
 // Function will return JSON with the following format (max 5 artists):
 
@@ -45,14 +52,21 @@ function dropdownArtists($aname) {
 						   checkArtistName($array["artists"]["items"], 2),
 						   checkArtistName($array["artists"]["items"], 3),
 						   checkArtistName($array["artists"]["items"], 4));
+	$rtrnJSON->artistid= array(checkArtistID($array["artists"]["items"], 0),
+						   	   checkArtistID($array["artists"]["items"], 1),
+						   	   checkArtistID($array["artists"]["items"], 2),
+						       checkArtistID($array["artists"]["items"], 3),
+						       checkArtistID($array["artists"]["items"], 4));
 	$rtrnJSON->image= array(checkImageURL($array["artists"]["items"], 0),
 						    checkImageURL($array["artists"]["items"], 1),
 						    checkImageURL($array["artists"]["items"], 2),
 						    checkImageURL($array["artists"]["items"], 3),
 						    checkImageURL($array["artists"]["items"], 4));
-	
-	return $rtrnJSON
+	print_r($rtrnJSON);
+	return $rtrnJSON;
 
 }
+
+dropdownArtists("drake");
 
 ?>
