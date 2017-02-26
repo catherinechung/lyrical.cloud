@@ -17,7 +17,9 @@ $router->get('/api/wordcloud/new/{artist}', function (Request $request, Response
     $artist = $request->getAttribute('artist');
 
     # query api through manager
-    $results = $api->get_songs($artist);
+    $songs = $api->get_songs($artist);
+
+    # compute frequency through helper
 });
 
 # get word cloud for merged set of artists (can be merged into previous route)
