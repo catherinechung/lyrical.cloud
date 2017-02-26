@@ -30,7 +30,7 @@ $("#searchButton").click(function() {
     $.get("http://localhost:8080/api/dropdown/suggestions/drake", function(data, status) {
 
         console.log(data);
-        alert("Data: " + data + "\n" + status);
+        alert("Data: " + data + "\n" + status); 
     });
 
 
@@ -64,7 +64,7 @@ $("#automplete-1").autocomplete({
                       artist: item.artist,
                       id: item.id,
                       img: item.img
-                    }
+                    } 
                 });
 
                 console.log(stringArray);
@@ -87,25 +87,19 @@ $("#automplete-1").autocomplete({
     minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
 
-    // var $li = $('<li>'),
-    //     $img = $('<img style="object-fit:cover; width=50px; height=50px">')
-    //
-    // $img.attr({
-    //   src: item.img,
-    //   alt: item.artist
-    // });
-    //
-    // $li.attr('data-value', item.artist);
-    // $li.append('<a href="#">');
-    // $li.find('a').append($img).append(item.artist);
-    //
-    // return $li.appendTo(ul)
+    var $li = $('<li>'),
+        $img = $('<img style="object-fit:cover; width=50px; height=50px">');
 
-    var inner_html = '<a><div class="list_item_container"><div class="image"><img src="' + item.avatar + '"></div><div class="label"></div><div class="description">' + item.artist + '</div></div></a><hr/>';
-            return $("<li></li>")
-                    .data("item.autocomplete", item)
-                    .append(inner_html)
-                    .appendTo(ul);
+    $img.attr({
+      src: item.img,
+      alt: item.artist
+    });
+
+    $li.attr('data-value', item.artist);
+    $li.append('<a href="#">');
+    $li.find('a').append($img).append(item.artist);
+
+    return $li.appendTo(ul)
 };
 
 });
