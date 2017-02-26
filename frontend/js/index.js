@@ -79,7 +79,26 @@ var getArray = function(JSONObject, givenKey) {
 
 // call AJAX function
 $("#automplete-1").autocomplete({
-   source: availableTutorials,
+   source: function(request, response) {
+        $.ajax({
+            dataType: "json",
+            type : 'GET',
+            url: 'localhost:8080/api/',
+            success: function(data) {
+
+                alert("PHP Function worked");
+
+
+
+                response(availableTutorials);
+                // response( $.map( data, function(item) {
+                //     // your operation on data
+                // }));
+            },
+            error: function(data) {
+                alert("PHP Function call failed");
+            }
+        });,
    minLength: 3
 });
 
@@ -88,6 +107,17 @@ $("#automplete-1").keyup(function() {
         var input = $("#automplete-1").val();
 
         if(input.length >= MIN_LENGTH) {
+
+          $.ajax({
+                  url: 'yourPHPFunction',
+                  success: function(response) {
+                        $('input[name="fieldName"]').val(response);
+                  },
+                  error: function(jqXHR, status, message) {
+                        alert(message);
+                  }
+            });
+
           var namesArray = getArray(sampleData, "name");
           var imageArray = getArray(sampleData, "image");
 
