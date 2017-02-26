@@ -1,3 +1,18 @@
+body {
+  background-color: #e6e7e8;
+
+}
+
+#title {
+	font-family: Impact;
+  font-size: 32pt;
+}
+
+#lyrics {
+	font-family: "Gill Sans";
+	font-size: 20pt;
+}
+
 div {
 	text-align: center;
 }
