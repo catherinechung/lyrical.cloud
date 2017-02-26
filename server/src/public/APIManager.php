@@ -74,10 +74,6 @@ class APIManager {
 			return $songs;
 		}
 
-		// print_r($songs);
-		return $songs;
-	}
-
 		# utility function to get encoded artist id
 		# parameter: Artist Name
 		# return: Spotify Artist ID
