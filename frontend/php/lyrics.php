@@ -22,7 +22,7 @@ function findSongLyrics($artist, $track) {
   return $lyrics;
 }
 
-function parseSongLyrics($lyrics) {
+function parseSongLyrics($lyrics, &$overall_freq) {
   // Convert string to lowercase
   $lyrics = strtolower($lyrics);
 
@@ -50,18 +50,43 @@ function parseSongLyrics($lyrics) {
     else {
       $frequency_counts[$word]++;
     }
-  }
 
-  print_r($frequency_counts);
+    if (array_key_exists($word, $overall_freq)) {
+      $overall_freq[$word] = 1;
+    }
+    else {
+      $overall_freq[$word]++;
+    }
+  }
 
   return $frequency_counts;
 }
 
-function parseAllLyrics() {
+function parseAllLyrics(&$artist_and_song_list) {
+  $artist_name = $artist_and_song_list["artist"];
+  $song_list = $artist_and_song_list["songs"];
 
+  // Overall word count frequencies
+  $overall_freq = array();
+
+  // Individual song frequency list
+  $song_frequency_list = array();
+
+  foreach($song_list as $song) {
+    $lyrics = findSongLyrics($artist_name, $song);
+    $individual_song_freq = parseSongLyrics($lyrics, $overall_freq);
+    array_push($song_frequency_list, $individual_song_freq);
+  }
+
+  // arsort($overall_freq);
+  // print_r($overall_freq);
+  print_r($song_frequency_list);
 }
 
-$lyrics = findSongLyrics('drake', 'hotline');
-parseSongLyrics($lyrics);
+$arr = array();
+$arr["artist"] = "justinbeiber";
+$arr["songs"] = array("baby", "boyfriend");
+
+parseAllLyrics($arr);
 
 ?>
