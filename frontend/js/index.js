@@ -80,15 +80,15 @@ var getArray = function(JSONObject, givenKey) {
 // call AJAX function
 $("#automplete-1").autocomplete({
    source: function(request, response) {
+        var $artistName = $("#automplete-1").val();
+        console.log($artistName);
         $.ajax({
             dataType: "json",
             type : 'GET',
-            url: 'localhost:8080/api/',
+            url: 'localhost:8080/api/dropdown/suggestions/' + $artistName,
             success: function(data) {
-
+              
                 alert("PHP Function worked");
-
-
 
                 response(availableTutorials);
                 // response( $.map( data, function(item) {
@@ -98,37 +98,38 @@ $("#automplete-1").autocomplete({
             error: function(data) {
                 alert("PHP Function call failed");
             }
-        });,
+        })
+      },
    minLength: 3
 });
 
-$("#automplete-1").keyup(function() {
+// $("#automplete-1").keyup(function() {
 
-        var input = $("#automplete-1").val();
+//         var input = $("#automplete-1").val();
 
-        if(input.length >= MIN_LENGTH) {
+//         if(input.length >= MIN_LENGTH) {
 
-          $.ajax({
-                  url: 'yourPHPFunction',
-                  success: function(response) {
-                        $('input[name="fieldName"]').val(response);
-                  },
-                  error: function(jqXHR, status, message) {
-                        alert(message);
-                  }
-            });
+//           $.ajax({
+//                   url: 'yourPHPFunction',
+//                   success: function(response) {
+//                         $('input[name="fieldName"]').val(response);
+//                   },
+//                   error: function(jqXHR, status, message) {
+//                         alert(message);
+//                   }
+//             });
 
-          var namesArray = getArray(sampleData, "name");
-          var imageArray = getArray(sampleData, "image");
+//           var namesArray = getArray(sampleData, "name");
+//           var imageArray = getArray(sampleData, "image");
 
-          for(var i = 0; i < namesArray.length; i++) {
-            console.log(namesArray[i]);
-            console.log(imageArray[i]);
-          }
+//           for(var i = 0; i < namesArray.length; i++) {
+//             console.log(namesArray[i]);
+//             console.log(imageArray[i]);
+//           }
 
-        }
+//         }
 
-});
+// });
 
 
 
