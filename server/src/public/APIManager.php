@@ -24,7 +24,12 @@
 				$id = $this->validate_id($suggestion);
 				$img = $this->validate_image($suggestion);
 
-				$suggestions[] = array($name, $id, $img);
+				$suggestion = array();
+				$suggestion[artist] = $name;
+				$suggestion[id] = $id;
+				$suggestion[img] = $img;
+
+				$suggestions[] = $suggestion;
 			}
 
 			return $suggestions;
@@ -45,8 +50,8 @@
 		}
 
 		private function validate_image($entry) {
-			if (isset($entry["images"]["2"])) {
-				return @$entry[images][2];
+			if (isset($entry["images"]["2"]["url"])) {
+				return @$entry[images][2][url];
 			}
 			return "";
 		}
@@ -65,7 +70,6 @@
 				$this->get_songs_from_album($albumID, $songs[songs]);
 			}
 
-			print_r($songs);
 			return $songs;
 		}
 
