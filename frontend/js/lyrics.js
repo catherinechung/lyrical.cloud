@@ -8,14 +8,14 @@ document.onreadystatechange = function () {
     var word = " " + localStorage.getItem('word')+ " ";
     var lyrics;
 
-    $.ajax({
+    /*$.ajax({
       type: 'post',
       url: '../php/lyrics.php',
       data: {songNameData: songName, artistData: artist},
       success: function(output) {
         lyrics = output;
       }
-  });
+  });*/
      //query musixmatch given song and artist to get lyrics
 
 
@@ -23,7 +23,7 @@ document.onreadystatechange = function () {
      document.title = songName + " by " + artist;
      document.getElementById("title").innerHTML = songName + " by " + artist;
 
-     //lyrics = song.lyrics;
+     lyrics = song.lyrics;
      lyrics = lyrics.replace(/(\n|\r|\r\n)/g, "<br />");
 	 var regex = new RegExp('('+word+')', 'ig');
      lyrics = lyrics.replace(regex, '<span class="highlight">$1</span>');
