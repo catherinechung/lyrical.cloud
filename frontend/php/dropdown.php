@@ -27,23 +27,29 @@ function checkArtistID($array, $x) {
 // Function will return JSON with the following format (max 5 artists):
 
 /*
-	( [name] => Array ( [0] => Drake 
-						[1] => Drake 
-						[2] => Drake White 
-						[3] => Nick Drake 
-						[4] => Drake Bell )
-	  [artistid] => Array ( [0] => 3TVXtAsR1Inumwj472S9r4 
-	  						[1] => 4W9G3Vnt9eXWTo4VeOQkSa 
-	  						[2] => 29ijED2bnnprp2TciAK1aO 
-	  						[3] => 5c3GLXai8YOMid29ZEuR9y 
-	  						[4] => 03ilIKH0i08IxmjKcn63ne ) 
-	  [image] => Array ( [0] => https://i.scdn.co/image/cb080366dc8af1fe4dc90c4b9959794794884c66 
-	  					 [1] => https://i.scdn.co/image/f4a465c6022a30ee187452f7923e509d480c4c1a 
-	  					 [2] => https://i.scdn.co/image/8b7d34461462466d5a5b32d9d7a3a94729767c13 
-	  					 [3] => https://i.scdn.co/image/267080662cf3c019ea8020a4e0e8dd5a7be4d909 
-	  					 [4] => ) 
-	 )
-
+	{  
+	   "name":[  
+	      "Drake",
+	      "Drake",
+	      "Drake White",
+	      "Nick Drake",
+	      "Drake Bell"
+	   ],
+	   "artistid":[  
+	      "3TVXtAsR1Inumwj472S9r4",
+	      "4W9G3Vnt9eXWTo4VeOQkSa",
+	      "29ijED2bnnprp2TciAK1aO",
+	      "5c3GLXai8YOMid29ZEuR9y",
+	      "03ilIKH0i08IxmjKcn63ne"
+	   ],
+	   "image":[  
+	      "https:\/\/i.scdn.co\/image\/cb080366dc8af1fe4dc90c4b9959794794884c66",
+	      "https:\/\/i.scdn.co\/image\/f4a465c6022a30ee187452f7923e509d480c4c1a",
+	      "https:\/\/i.scdn.co\/image\/8b7d34461462466d5a5b32d9d7a3a94729767c13",
+	      "https:\/\/i.scdn.co\/image\/267080662cf3c019ea8020a4e0e8dd5a7be4d909",
+	      ""
+	   ]
+	}
 */
 
 function dropdownArtists($aname) {
@@ -68,8 +74,7 @@ function dropdownArtists($aname) {
 						    checkImageURL($array["artists"]["items"], 3),
 						    checkImageURL($array["artists"]["items"], 4));
 	
-	print_r($rtrnJSON);
-	return $rtrnJSON;
+	return json_encode($rtrnJSON);
 
 }
 

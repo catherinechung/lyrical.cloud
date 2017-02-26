@@ -5,15 +5,19 @@
   <title>Song List Page</title>
   <script src="js/jquery.js"></script>
   <script src="js/songList.js"></script>
+  <script src="test.js?v=1"></script>
   <link rel="stylesheet" href="css/songList.css">
+  <link rel="logo icon" href="resources/logo.ico" type="image/x-icon">
 </head>
 
 <body>
 
   <div id="SongListPage">
-    <h1 id="songListTitle">Song List Page</h1>
-    <ol id="songList"></ol>
-    <button id="backToWordCloudButton" onclick="returnWordCloud()" type="button">Back to Word Cloud</button>
+    <h1 id="songListTitle"></h1>
+    <p>
+      <h2 id="songList"></h2>
+    </p>
+    <button class="btn-class" id="backToWordCloudButton" onclick="returnWordCloud()" type="button">Back to Word Cloud</button>
   </div>
 
 </body>
