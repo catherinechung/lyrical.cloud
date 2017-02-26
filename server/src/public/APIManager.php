@@ -10,6 +10,47 @@
 
 		/* SPOTIFY API METHODS */
 
+		# get search suggestions for the given search input
+		# parameter: Search Input 
+		# return: 
+		public function get_search_suggestions($search) {
+			$response = file_get_contents($this->spAPI . "search?q=" . $search . "&type=artist&limit=5");
+			$data = json_decode($response, true);
+			$suggestions = array();
+
+
+			foreach(@$data[artists][items] as $suggestion) {
+				$name = $this->validate_name($suggestion);
+				$id = $this->validate_id($suggestion);
+				$img = $this->validate_image($suggestion);
+
+				$suggestions[] = array($name, $id, $img);
+			}
+
+			return $suggestions;
+		}
+
+		private function validate_name($entry) {
+			if (isset($entry["name"])) {
+				return @$entry[name];
+			}
+			return "";
+		}
+
+		private function validate_id($entry) {
+			if (isset($entry["id"])) {
+				return @$entry[id];
+			}
+			return "";
+		}
+
+		private function validate_image($entry) {
+			if (isset($entry["images"]["2"])) {
+				return @$entry[images][2];
+			}
+			return "";
+		}
+
 		# get all songs from an artist's discography
 		# parameter: Artist Name
 		# return: List of all songs by this artist
@@ -22,6 +63,7 @@
 				$this->get_songs_from_album($albumID, $songs);
 			}
 
+			print_r($songs);
 			return $songs;
 		}
 

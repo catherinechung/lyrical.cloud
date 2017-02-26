@@ -37,5 +37,16 @@ $router->get('/api/lyrics/{artist}/{song}', function (Request $request, Response
 	$lyrics = $api->get_lyrics($artist, $song);
 });
 
+# get  suggestions for the search bar's dropdown
+$router->get('/api/dropdown/suggestions/{search}', function (Request $request, Response $response) use ($api) {
+	# get params
+	$search = $request->getAttribute('search');
+
+	# query api through manager
+	$suggestions = $api->get_search_suggestions($search);
+
+	print_r($suggestions);
+});
+
 # run routing server
 $router->run();
