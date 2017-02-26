@@ -65,6 +65,11 @@ function draw(data, bounds) {
             .transition()
             .duration(1000)
             .style("opacity", 1);
+    text.on("click", datum => { 
+        localStorage.setItem('word', datum["text"]);
+        window.location.href = "songList.html";
+        console.log(datum["text"]);
+    });
     text.style("font-family", function(d) {
         return d.font;
     })

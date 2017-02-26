@@ -1,5 +1,5 @@
-// localStorage.getItem('word');
-var word = "One";
+ 
+var word = localStorage.getItem('word');
 // localStorage.getItem('artist')
 var artist = "Drake";
 
