@@ -212,12 +212,7 @@ class APIManager {
 			array_push($overall_freq_formatted, $entry);
 		}
 
-		print_r($overall_freq_formatted);
-		// print_r($song_frequency_list);
-
 		return $overall_freq_formatted;
 	}
-
-	
 }
 ?>
