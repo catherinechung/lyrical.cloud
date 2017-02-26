@@ -36,7 +36,7 @@ function parseSongLyrics($lyrics, &$overall_freq) {
   echo $lyrics;
 
   $array_of_words = explode(" ", $lyrics);
-  print_r($array_of_words);
+  // print_r($array_of_words);
 
   // Remove conjunctions
   $array_of_words = array_diff($array_of_words, ["i", "you", "he", "she", "we", "you", "they", "and", "but", "or", "yet", "for", "nor", "so"]);
@@ -45,29 +45,26 @@ function parseSongLyrics($lyrics, &$overall_freq) {
 
   foreach ($array_of_words as $word) {
     if (array_key_exists($word, $array_of_words)) {
-      $frequency_counts[$word] = 1;
+      $frequency_counts[$word]++;
     }
     else {
-      $frequency_counts[$word]++;
+      $frequency_counts[$word] = 1;
     }
 
     if (array_key_exists($word, $overall_freq)) {
-      $overall_freq[$word] = 1;
+      $overall_freq[$word]++;
     }
     else {
-      $overall_freq[$word]++;
+      $overall_freq[$word] = 1;
     }
   }
 
   return $frequency_counts;
 }
 
-function parseAllLyrics(&$artist_and_song_list) {
+function parseAllLyrics(&$artist_and_song_list, &$overall_freq) {
   $artist_name = $artist_and_song_list["artist"];
   $song_list = $artist_and_song_list["songs"];
-
-  // Overall word count frequencies
-  $overall_freq = array();
 
   // Individual song frequency list
   $song_frequency_list = array();
@@ -78,15 +75,16 @@ function parseAllLyrics(&$artist_and_song_list) {
     array_push($song_frequency_list, $individual_song_freq);
   }
 
-  // arsort($overall_freq);
-  // print_r($overall_freq);
+  arsort($overall_freq);
+  print_r($overall_freq);
   print_r($song_frequency_list);
 }
 
 $arr = array();
-$arr["artist"] = "justinbeiber";
-$arr["songs"] = array("baby", "boyfriend");
+$arr["artist"] = "justin+beiber";
+$arr["songs"] = array("what+do+you+mean", "baby", "boyfriend", "never+say+never");
 
-parseAllLyrics($arr);
+$overall_freq = array();
+parseAllLyrics($arr, $overall_freq);
 
 ?>
