@@ -1,7 +1,7 @@
 var fill = d3.scale.category20b();
 
 var w = window.innerWidth,
-        h = window.innerHeight;
+    h = 500;
 
 var max,
         fontSize;
@@ -31,7 +31,7 @@ window.onresize = function(event) {
 
 function draw(data, bounds) {
     var w = window.innerWidth,
-        h = window.innerHeight;
+    h = 500;
 
     svg.attr("width", w).attr("height", h);
 
