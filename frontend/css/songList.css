@@ -1,15 +1,27 @@
 body {
-  text-align: center
+  background-color: #e6e7e8;
+  text-align: center;
 }
 
-ol {
+h1 {
+  font-family: Impact;
+  font-size: 32pt;
+}
+
+h2 {
+  font-family: Impact;
+  font-size: 20pt;
   cursor:pointer;
-  color:blue;
-  text-decoration: underline;
   text-align: center;
   display: inline-block;
+  list-style-type: none;
+  line-height: 150%;
 }
 
 li {
-  text-align: center;
+  counter-increment: step-counter;
+}
+
+li:hover {
+  background-color: #e8ea80;
 }
