@@ -58,9 +58,11 @@
 			$id = $this->get_artist_id($artist);
 			$albumIDs = $this->get_albums($id);
 			$songs = array();
+			$songs[artist] = $artist;
+			$songs[songs] = array();
 			
 			foreach($albumIDs as $albumID) {
-				$this->get_songs_from_album($albumID, $songs);
+				$this->get_songs_from_album($albumID, $songs[songs]);
 			}
 
 			print_r($songs);
@@ -112,7 +114,7 @@
 			$data = json_decode($response, true);
 
 			foreach(@$data[items] as $song) {
-				$arr[] = strtolower(str_replace(' ', '', @$song[name]));
+				$arr[] = strtolower(str_replace(' ', '+', @$song[name]));
 			}
 		}
 
