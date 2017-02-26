@@ -45,7 +45,7 @@ $router->get('/api/dropdown/suggestions/{search}', function (Request $request, R
 	# query api through manager
 	$suggestions = $api->get_search_suggestions($search);
 
-	print_r($suggestions);
+	return $suggestions;
 });
 
 # run routing server
