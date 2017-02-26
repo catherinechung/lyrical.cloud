@@ -27,3 +27,31 @@ div.center {
 .highlight {
     background-color: yellow;
 }
+
+.btn-class {
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    color: #000000;
+    border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    font-family: Avenir;
+    width: auto;
+    height: auto;
+    font-size: 14px;
+    padding: 10px 40px;
+    box-shadow: inset 1px 1px 0 0 #deb5d5, inset 0 -1px 0 0 #deb5d5, inset 0 0 0 1px #deb5d5, 0 2px 4px 0 #deb5d5;
+    -moz-box-shadow: inset 1px 1px 0 0 #deb5d5, inset 0 -1px 0 0 #deb5d5, inset 0 0 0 1px #deb5d5, 0 2px 4px 0 #deb5d5;
+    -webkit-box-shadow: inset 1px 1px 0 0 #deb5d5, inset 0 -1px 0 0 #deb5d5, inset 0 0 0 1px #deb5d5, 0 2px 4px 0 #deb5d5;
+    background-color: #deb5d5;
+}
+
+.btn-class:hover, .btn-class:active {
+    border: none;
+    color: #FFFFFF;
+    box-shadow: inset 0 1px 0 0 #e8ea80, inset 0 -1px 0 0 #e8ea80, inset 0 0 0 1px #e8ea80;
+    -moz-box-shadow: inset 0 1px 0 0 #e8ea80, inset 0 -1px 0 0 #e8ea80, inset 0 0 0 1px #e8ea80;
+    -webkit-box-shadow: inset 0 1px 0 0 #e8ea80, inset 0 -1px 0 0 #e8ea80, inset 0 0 0 1px #e8ea80;
+    background-color: #e8ea80;
+}
