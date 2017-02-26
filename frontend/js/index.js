@@ -36,37 +36,6 @@ $("#searchButton").click(function() {
 
 });
 
-var availableTutorials  =  [
-   "ActionScript",
-   "Boostrap",
-   "C",
-   "C++",
-];
-
-var sampleData = {
-	   "name":[
-	      "Drake",
-	      "Drake",
-	      "Drake White",
-	      "Nick Drake",
-	      "Drake Bell"
-	   ],
-	   "artistid":[
-	      "3TVXtAsR1Inumwj472S9r4",
-	      "4W9G3Vnt9eXWTo4VeOQkSa",
-	      "29ijED2bnnprp2TciAK1aO",
-	      "5c3GLXai8YOMid29ZEuR9y",
-	      "03ilIKH0i08IxmjKcn63ne"
-	   ],
-	   "image":[
-	      "https:\/\/i.scdn.co\/image\/cb080366dc8af1fe4dc90c4b9959794794884c66",
-	      "https:\/\/i.scdn.co\/image\/f4a465c6022a30ee187452f7923e509d480c4c1a",
-	      "https:\/\/i.scdn.co\/image\/8b7d34461462466d5a5b32d9d7a3a94729767c13",
-	      "https:\/\/i.scdn.co\/image\/267080662cf3c019ea8020a4e0e8dd5a7be4d909",
-	      ""
-	   ]
-	}
-
 // grab the artist names/image
 var getArray = function(JSONObject, givenKey) {
   var returnArray =[];
@@ -80,7 +49,7 @@ var getArray = function(JSONObject, givenKey) {
 
 // call AJAX function
 $("#automplete-1").autocomplete({
-   source: function(request, response) {
+    source: function(request, response) {
 
         var $artistName = $("#automplete-1").val();
         console.log($artistName);
@@ -91,55 +60,43 @@ $("#automplete-1").autocomplete({
             success: function(data) {
 
                 var stringArray = $.map(data, function(item) {
-                    artist: item.artist,
-                    id: item.id,
-                    img: item.img, 
-                })
+                    return {
+                      artist: item.artist,
+                      id: item.id,
+                      img: item.img
+                    } 
+                });
 
-                print stringArray;
-                response(availableTutorials);
-                // response( $.map( data, function(item) {
-                //     // your operation on data
-                // }));
+                console.log(stringArray);
+
+                response(stringArray);
             },
             error: function(data) {
-
-                console.log(data);
                 alert("PHP Function call failed");
             }
         })
-      },
-   minLength: 3
-});
+    },
+    focus: function(event, ui) {
+      $("#automplete-1").val(ui.item.artist);
+    },
+    select: function(event, ui) {
+    },
+    minLength: 3
+}).data("ui-autocomplete")._renderItem=function(ul, item) {
 
-// $("#automplete-1").keyup(function() {
+    var $li = $('<li>'),
+        $img = $('<img>');
 
-//         var input = $("#automplete-1").val();
+    $img.attr({
+      src: item.img,
+      alt: item.artist
+    });
 
-//         if(input.length >= MIN_LENGTH) {
+    $li.attr('data-value', item.artist);
+    $li.append('<a href="#">');
+    $li.find('a').append($img).append(item.artist);
 
-//           $.ajax({
-//                   url: 'yourPHPFunction',
-//                   success: function(response) {
-//                         $('input[name="fieldName"]').val(response);
-//                   },
-//                   error: function(jqXHR, status, message) {
-//                         alert(message);
-//                   }
-//             });
-
-//           var namesArray = getArray(sampleData, "name");
-//           var imageArray = getArray(sampleData, "image");
-
-//           for(var i = 0; i < namesArray.length; i++) {
-//             console.log(namesArray[i]);
-//             console.log(imageArray[i]);
-//           }
-
-//         }
-
-// });
-
-
+    return $li.appendTo(ul)
+};
 
 });
