@@ -87,11 +87,16 @@ $("#automplete-1").autocomplete({
 
         $.ajax({
             type : 'GET',
-            url: 'http://localhost:8080/api/dropdown/suggestions/drake',
+            url: 'http://localhost:8080/api/dropdown/suggestions/' + $artistName,
             success: function(data) {
 
-                alert("PHP Function worked");
+                var stringArray = $.map(data, function(item) {
+                    artist: item.artist,
+                    id: item.id,
+                    img: item.img, 
+                })
 
+                print stringArray;
                 response(availableTutorials);
                 // response( $.map( data, function(item) {
                 //     // your operation on data
