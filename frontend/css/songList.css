@@ -1,5 +1,15 @@
+body {
+  text-align: center
+}
+
 ol {
   cursor:pointer;
   color:blue;
   text-decoration: underline;
+  text-align: center;
+  display: inline-block;
+}
+
+li {
+  text-align: center;
 }
