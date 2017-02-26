@@ -22,16 +22,17 @@ var data = [{
 
 $("#searchButton").click(function() {
 
-    var artistName = $('input').val();
-    // AJAX GET REQUEST
-    // $.ajax({
-    //     type: "GET",
-    //     url: 'test.php',
-    //     data: {artist: songArtist},
-    //     success: function(data){
-    //         alert(data);
-    //     }
-    // });
+  console.log("helo");
+
+    // var artistName = $('input').val();
+    // // AJAX GET REQUEST
+
+    $.get("http://localhost:8080/api/dropdown/suggestions/drake", function(data, status) {
+
+        console.log(data);
+        alert("Data: " + data + "\n" + status); 
+    });
+
 
 });
 
@@ -80,22 +81,30 @@ var getArray = function(JSONObject, givenKey) {
 // call AJAX function
 $("#automplete-1").autocomplete({
    source: function(request, response) {
+
         var $artistName = $("#automplete-1").val();
         console.log($artistName);
-        $.ajax({
-            dataType: "json",
-            type : 'GET',
-            url: 'localhost:8080/api/dropdown/suggestions/' + $artistName,
-            success: function(data) {
-              
-                alert("PHP Function worked");
 
+        $.ajax({
+            type : 'GET',
+            url: 'http://localhost:8080/api/dropdown/suggestions/' + $artistName,
+            success: function(data) {
+
+                var stringArray = $.map(data, function(item) {
+                    artist: item.artist,
+                    id: item.id,
+                    img: item.img, 
+                })
+
+                print stringArray;
                 response(availableTutorials);
                 // response( $.map( data, function(item) {
                 //     // your operation on data
                 // }));
             },
             error: function(data) {
+
+                console.log(data);
                 alert("PHP Function call failed");
             }
         })

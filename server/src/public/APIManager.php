@@ -24,11 +24,16 @@ class APIManager {
 			$id = $this->validate_id($suggestion);
 			$img = $this->validate_image($suggestion);
 
-			$suggestions[] = array($name, $id, $img);
-		}
+				$suggestion = array();
+				$suggestion[artist] = $name;
+				$suggestion[id] = $id;
+				$suggestion[img] = $img;
 
-		return $suggestions;
-	}
+				$suggestions[] = $suggestion;
+			}
+
+			return $suggestions;
+		}
 
 	private function validate_name($entry) {
 		if (isset($entry["name"])) {
@@ -44,25 +49,29 @@ class APIManager {
 		return "";
 	}
 
-	private function validate_image($entry) {
-		if (isset($entry["images"]["2"])) {
-			return @$entry[images][2];
+		private function validate_image($entry) {
+			if (isset($entry["images"]["2"]["url"])) {
+				return @$entry[images][2][url];
+			}
+			return "";
 		}
-		return "";
-	}
 
 		# get all songs from an artist's discography
 		# parameter: Artist Name
 		# return: List of all songs by this artist
-	public function get_songs($artist) {
-		$id = $this->get_artist_id($artist);
-		$albumIDs = $this->get_albums($id);
-		$songs = array();
-		$songs[artist] = $artist;
-		$songs[songs] = array();
 
-		foreach($albumIDs as $albumID) {
-			$this->get_songs_from_album($albumID, $songs[songs]);
+		public function get_songs($artist) {
+			$id = $this->get_artist_id($artist);
+			$albumIDs = $this->get_albums($id);
+			$songs = array();
+			$songs[artist] = $artist;
+			$songs[songs] = array();
+			
+			foreach($albumIDs as $albumID) {
+				$this->get_songs_from_album($albumID, $songs[songs]);
+			}
+
+			return $songs;
 		}
 
 		// print_r($songs);

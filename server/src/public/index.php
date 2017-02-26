@@ -50,7 +50,7 @@ $router->get('/api/dropdown/suggestions/{search}', function (Request $request, R
 	$suggestions = $api->get_search_suggestions($search);
 
 	# new response to return json
-	$res = $response->withJson($suggestions);
+	$res = $response->withJson($suggestions)->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
 	return $res;
 });
 
