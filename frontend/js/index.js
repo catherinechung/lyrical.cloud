@@ -65,7 +65,7 @@ $("#automplete-1").autocomplete({
                       artist: item.artist,
                       id: item.id,
                       img: item.img
-                    } 
+                    }
                 });
 
                 console.log(stringArray);
@@ -78,26 +78,35 @@ $("#automplete-1").autocomplete({
         })
     },
     focus: function(event, ui) {
+      event.preventDefault();
       $("#automplete-1").val(ui.item.artist);
     },
     select: function(event, ui) {
+      event.preventDefault();
+      $("#automplete-1").val(ui.item.artist);
     },
     minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
 
-    var $li = $('<li>'),
-        $img = $('<img>');
+    // var $li = $('<li>'),
+    //     $img = $('<img style="object-fit:cover; width=50px; height=50px">')
+    //
+    // $img.attr({
+    //   src: item.img,
+    //   alt: item.artist
+    // });
+    //
+    // $li.attr('data-value', item.artist);
+    // $li.append('<a href="#">');
+    // $li.find('a').append($img).append(item.artist);
+    //
+    // return $li.appendTo(ul)
 
-    $img.attr({
-      src: item.img,
-      alt: item.artist
-    });
-
-    $li.attr('data-value', item.artist);
-    $li.append('<a href="#">');
-    $li.find('a').append($img).append(item.artist);
-
-    return $li.appendTo(ul)
+    var inner_html = '<a><div class="list_item_container"><div class="image"><img src="' + item.avatar + '"></div><div class="label"></div><div class="description">' + item.artist + '</div></div></a><hr/>';
+            return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append(inner_html)
+                    .appendTo(ul);
 };
 
 });
