@@ -23,7 +23,11 @@ $router->get('/api/wordcloud/new/{artist}', function (Request $request, Response
 
     # compute frequency through helper
     $overall_freq = array();
-    $api->parse_all_lyrics($songs, $overall_freq);
+    $overall_freq_formatted = $api->parse_all_lyrics($songs, $overall_freq);
+
+    # new response to return json
+	$res = $response->withJson($overall_freq_formatted)->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+	return $res;
 });
 
 # get word cloud for merged set of artists (can be merged into previous route)

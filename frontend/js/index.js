@@ -22,17 +22,20 @@ var data = [{
 
 $("#searchButton").click(function() {
 
-  console.log("helo");
-
-    // var artistName = $('input').val();
-    // // AJAX GET REQUEST
-
-    $.get("http://localhost:8080/api/dropdown/suggestions/drake", function(data, status) {
-
-        console.log(data);
-        alert("Data: " + data + "\n" + status); 
-    });
-
+  var $artistName = $("#automplete-1").val();
+  $.ajax({
+    type : 'GET',
+    url: 'http://localhost:8080/api/wordcloud/new/' + $artistName,
+    success: function(data) {
+      tags = [];
+      update();
+      tags = data;
+      update();
+    },
+    error: function(data) {
+      alert("PHP Function call failed");
+    }
+  });
 
 });
 
