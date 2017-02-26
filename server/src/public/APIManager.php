@@ -1,18 +1,18 @@
 <?php
 class APIManager {
 
-		# musixmatch
+	# musixmatch
 	private $mmAPI = 'http://api.musixmatch.com/ws/1.1/';
 	private $mmKey = '&apikey=a820a7147e13aa7c816324dc7c2c57b9';
 
-		# spotify
+	# spotify
 	private $spAPI = 'https://api.spotify.com/v1/';
 
 	/* SPOTIFY API METHODS */
 
-		# get search suggestions for the given search input
-		# parameter: Search Input 
-		# return: 
+	# get search suggestions for the given search input
+	# parameter: Search Input 
+	# return: Search Suggestions
 	public function get_search_suggestions($search) {
 		$response = file_get_contents($this->spAPI . "search?q=" . $search . "&type=artist&limit=5");
 		$data = json_decode($response, true);
@@ -24,16 +24,16 @@ class APIManager {
 			$id = $this->validate_id($suggestion);
 			$img = $this->validate_image($suggestion);
 
-				$suggestion = array();
-				$suggestion[artist] = $name;
-				$suggestion[id] = $id;
-				$suggestion[img] = $img;
+			$suggestion = array();
+			$suggestion[artist] = $name;
+			$suggestion[id] = $id;
+			$suggestion[img] = $img;
 
-				$suggestions[] = $suggestion;
-			}
-
-			return $suggestions;
+			$suggestions[] = $suggestion;
 		}
+
+		return $suggestions;
+	}
 
 	private function validate_name($entry) {
 		if (isset($entry["name"])) {
@@ -49,34 +49,33 @@ class APIManager {
 		return "";
 	}
 
-		private function validate_image($entry) {
-			if (isset($entry["images"]["2"]["url"])) {
-				return @$entry[images][2][url];
-			}
-			return "";
+	private function validate_image($entry) {
+		if (isset($entry["images"]["2"]["url"])) {
+			return @$entry[images][2][url];
+		}
+		return "";
+	}
+
+	# get all songs from an artist's discography
+	# parameter: Artist Name
+	# return: List of all songs by this artist
+	public function get_songs($artist) {
+		$id = $this->get_artist_id($artist);
+		$albumIDs = $this->get_albums($id);
+		$songs = array();
+		$songs[artist] = $artist;
+		$songs[songs] = array();
+
+		foreach($albumIDs as $albumID) {
+			$this->get_songs_from_album($albumID, $songs[songs]);
 		}
 
-		# get all songs from an artist's discography
-		# parameter: Artist Name
-		# return: List of all songs by this artist
+		return $songs;
+	}
 
-		public function get_songs($artist) {
-			$id = $this->get_artist_id($artist);
-			$albumIDs = $this->get_albums($id);
-			$songs = array();
-			$songs[artist] = $artist;
-			$songs[songs] = array();
-			
-			foreach($albumIDs as $albumID) {
-				$this->get_songs_from_album($albumID, $songs[songs]);
-			}
-
-			return $songs;
-		}
-
-		# utility function to get encoded artist id
-		# parameter: Artist Name
-		# return: Spotify Artist ID
+	# utility function to get encoded artist id
+	# parameter: Artist Name
+	# return: Spotify Artist ID
 	private function get_artist_id($artist) {
 		$response = file_get_contents($this->spAPI . "search?q=" . $artist . "&type=artist&limit=1");
 		$data = json_decode($response, true);
@@ -84,9 +83,9 @@ class APIManager {
 		return @$data[artists][items][0][id];
 	}
 
-		# get albums from an artist's discography
-		# parameter: Spotify Artist ID
-		# return: List of albums
+	# get albums from an artist's discography
+	# parameter: Spotify Artist ID
+	# return: List of albums
 	private function get_albums($artistID) {
 		$response = file_get_contents($this->spAPI . "artists/" . $artistID . "/albums?limit=30");
 		$data = json_decode($response, true);
@@ -111,9 +110,9 @@ class APIManager {
 		return $albumIDs;
 	}
 
-		# get songs from an artist's album
-		# parameter: Spotify Album ID
-		# return: List of songs in this album
+	# get songs from an artist's album
+	# parameter: Spotify Album ID
+	# return: List of songs in this album
 	private function get_songs_from_album($albumID, &$arr) {
 		$response = file_get_contents($this->spAPI . "albums/" . $albumID . "/tracks");
 		$data = json_decode($response, true);
@@ -125,7 +124,7 @@ class APIManager {
 
 	/* MUSIXMATCH API METHODS */
 
-		# get track id, given name of artist and track
+	# get track id, given name of artist and track
 	private function get_track_id($artist, $track) {
 		$result = file_get_contents($this->mmAPI . "track.search?q_track={$track}&q_arist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
 
@@ -135,7 +134,7 @@ class APIManager {
 		return $track_id;
 	}
 
-		# get lyrics for track, given name of artist and track
+	# get lyrics for track, given name of artist and track
 	public function get_lyrics($artist, $track) {
 		$track_id = $this->get_track_id($artist, $track);
 
@@ -191,7 +190,7 @@ class APIManager {
 		$artist_name = $artist_and_song_list["artist"];
 		$song_list = $artist_and_song_list["songs"];
 
-  // Individual song frequency list
+  		// Individual song frequency list
 		$song_frequency_list = array();
 
 		foreach($song_list as $song) {
@@ -205,6 +204,6 @@ class APIManager {
 		// print_r($song_frequency_list);
 	}
 
-	
+	public function merge_all_lyrics()
 }
 ?>
