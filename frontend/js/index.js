@@ -35,64 +35,69 @@ $("#searchButton").click(function() {
 
 });
 
-$("#artistName").keyup(function() {
+var availableTutorials  =  [
+   "ActionScript",
+   "Boostrap",
+   "C",
+   "C++",
+];
 
-        var keyword = $("#artistName").val();
-        if (keyword.length >= MIN_LENGTH) {
+var sampleData = {
+	   "name":[
+	      "Drake",
+	      "Drake",
+	      "Drake White",
+	      "Nick Drake",
+	      "Drake Bell"
+	   ],
+	   "artistid":[
+	      "3TVXtAsR1Inumwj472S9r4",
+	      "4W9G3Vnt9eXWTo4VeOQkSa",
+	      "29ijED2bnnprp2TciAK1aO",
+	      "5c3GLXai8YOMid29ZEuR9y",
+	      "03ilIKH0i08IxmjKcn63ne"
+	   ],
+	   "image":[
+	      "https:\/\/i.scdn.co\/image\/cb080366dc8af1fe4dc90c4b9959794794884c66",
+	      "https:\/\/i.scdn.co\/image\/f4a465c6022a30ee187452f7923e509d480c4c1a",
+	      "https:\/\/i.scdn.co\/image\/8b7d34461462466d5a5b32d9d7a3a94729767c13",
+	      "https:\/\/i.scdn.co\/image\/267080662cf3c019ea8020a4e0e8dd5a7be4d909",
+	      ""
+	   ]
+	}
 
-            // $.get( "autocomplete.php", { keyword: keyword, method: 'LOTNUM' } )
-            // .done(function( data ) {
+// grab the artist names/image
+var getArray = function(JSONObject, givenKey) {
+  var returnArray =[];
+  $.each(JSONObject, function(key, data) {
+         if(key == givenKey) {
+           returnArray = data;
+         }
+  });
+  return returnArray;
+}
 
-            var data = {
-                "name": [
-                    "Drake",
-                    "Drake",
-                    "Drake",
-                    "Drake",
-                    "Drake"
-                ],
-                "id": [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5"
-                ],
-                "img": [
-                    "O",
-                    "O",
-                    "O",
-                    "O",
-                    "O"
-                ]
-            }
+// call AJAX function
+$("#automplete-1").autocomplete({
+   source: availableTutorials,
+   minLength: 3
+});
 
-            $.each(data, function(key, data) {
+$("#automplete-1").keyup(function() {
 
-                if(key == "name") {
-                  $.each(data, function(index, data) {
-                      console.log('Artist - ', data);
-                      $('.results_lot_number').append('<div class="item">' + data + '</div>');
-                  })
-                } else if(key == "img") {
-                  $.each(data, function(index, data) {
-                      console.log('Image - ', data);
-                  })
-                }
+        var input = $("#automplete-1").val();
 
-            });
+        if(input.length >= MIN_LENGTH) {
+          var namesArray = getArray(sampleData, "name");
+          var imageArray = getArray(sampleData, "image");
 
-            $('.item').click(function() {
-                var text = $(this).html();
-                $('#artistName').val(text);
-                $('.results_lot_number').hide();
-            });
-
-            $('.results_lot_number').show();
+          for(var i = 0; i < namesArray.length; i++) {
+            console.log(namesArray[i]);
+            console.log(imageArray[i]);
           }
-          else {
-            $('.results_lot_number').html('');
-          }
+
+        }
+
 });
 
 

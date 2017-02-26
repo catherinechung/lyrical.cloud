@@ -10,15 +10,18 @@
     <!-- link CSS -->
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
+<<<<<<< HEAD
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
     <script src="js/jquery.js"></script>
     <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
     <script src="js/index.js"></script>
+=======
     <script type="text/javascript" src="bower_components/d3/d3.js"></script>
     <script type="text/javascript" src="bower_components/d3-cloud/d3.layout.cloud.js"></script>
     <script type="text/javascript" src="js/words.js"></script>
+>>>>>>> 7077609707a437c60baac575f4e3c0d0530d3061
 </head>
 
 <!-- Body -->
