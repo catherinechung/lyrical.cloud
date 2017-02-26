@@ -191,7 +191,7 @@ class APIManager {
 		$artist_name = $artist_and_song_list["artist"];
 		$song_list = $artist_and_song_list["songs"];
 
-  // Individual song frequency list
+  		// Individual song frequency list
 		$song_frequency_list = array();
 
 		foreach($song_list as $song) {
@@ -201,8 +201,21 @@ class APIManager {
 		}
 
 		arsort($overall_freq);
-		print_r($overall_freq);
+
+		// New array to format for front-end
+		$overall_freq_formatted = array();
+
+		foreach($overall_freq as $word => $freq) {
+			$entry = array();
+			$entry["key"] = $word;
+			$entry["value"] = $freq;
+			array_push($overall_freq_formatted, $entry);
+		}
+
+		print_r($overall_freq_formatted);
 		// print_r($song_frequency_list);
+
+		return $overall_freq_formatted;
 	}
 
 	
