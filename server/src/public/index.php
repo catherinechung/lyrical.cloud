@@ -13,13 +13,17 @@ $router = new \Slim\App;
 
 # get word cloud for given artist
 $router->get('/api/wordcloud/new/{artist}', function (Request $request, Response $response) use ($api) {
-	# get params
-    $artist = $request->getAttribute('artist');
+	# get and sanitize params
 
+    $artist = $request->getAttribute('artist');
+    $artist = str_replace(' ', '%20', $artist);
+    
     # query api through manager
     $songs = $api->get_songs($artist);
 
     # compute frequency through helper
+    $overall_freq = array();
+    $api->parse_all_lyrics($songs, $overall_freq);
 });
 
 # get word cloud for merged set of artists (can be merged into previous route)

@@ -33,6 +33,8 @@ function draw(data, bounds) {
     var w = window.innerWidth,
     h = 500;
 
+    var origColor;
+
     svg.attr("width", w).attr("height", h);
 
     scale = bounds ? Math.min(
@@ -69,6 +71,13 @@ function draw(data, bounds) {
         localStorage.setItem('word', datum["text"]);
         window.location.href = "songList.html";
         console.log(datum["text"]);
+    });
+    text.on("mouseover", function(d) {
+        origColor = d3.select(this).style("fill");
+        d3.select(this).style("fill", "#e8ea80");
+    });
+    text.on("mouseout", function(d) {
+        d3.select(this).style("fill", origColor);
     });
     text.style("font-family", function(d) {
         return d.font;
