@@ -77,15 +77,18 @@ $("#automplete-1").autocomplete({
         })
     },
     focus: function(event, ui) {
+      event.preventDefault();
       $("#automplete-1").val(ui.item.artist);
     },
     select: function(event, ui) {
+      event.preventDefault();
+      $("#automplete-1").val(ui.item.artist);
     },
     minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
 
     var $li = $('<li>'),
-        $img = $('<img>');
+        $img = $('<img style="object-fit:cover; width=50px; height=50px">')
 
     $img.attr({
       src: item.img,
