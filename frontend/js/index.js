@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  $("#vis").hide();
+
 const NO_SELECT = false;
 const YES_SELECT = true;
 const MIN_LENGTH = 3;
@@ -22,7 +24,12 @@ var data = [{
 
 $("#searchButton").click(function() {
 
+  $("#vis").show();
+
   var $artistName = $("#automplete-1").val();
+  $artistName = $artistName[0].toUpperCase() + $artistName.slice(1)
+  document.getElementById("artist").innerHTML = "Artist: " + $artistName;
+
   $.ajax({
     type : 'GET',
     url: 'http://localhost:8080/api/wordcloud/new/' + $artistName,
