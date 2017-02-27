@@ -141,6 +141,18 @@ class APIManager {
 		$lyrics_json = json_decode($result, true);
 		$lyrics = @$lyrics_json[message][body][lyrics][lyrics_body];
 
+		// Convert string to lowercase
+		$lyrics = strtolower($lyrics);
+
+  		// Remove symbols from lyrics string
+		$symbols_to_remove = array(",", ".", ";", "!", ")", "(", "/", "?", "\"", "'", "-", "*", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
+
+		$lyrics = str_replace($symbols_to_remove, "", $lyrics);
+		$lyrics = substr($lyrics, 0, -50);
+
+		$array_of_words = explode(" ", $lyrics);
+		$lyrics = implode(" ", $array_of_words);
+
 		return $lyrics;
 	}
 
@@ -182,7 +194,7 @@ class APIManager {
 		return $frequency_counts;
 	}
 
-	public function parse_all_lyrics(&$artist_and_song_list, &$overall_freq) {
+	public function parse_all_lyrics(&$artist_and_song_list, &$overall_freq, &$cache) {
 		$artist_name = $artist_and_song_list["artist"];
 		$song_list = $artist_and_song_list["songs"];
 

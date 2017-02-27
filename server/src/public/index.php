@@ -21,15 +21,13 @@ $router->get('/api/wordcloud/new/{artist}', function (Request $request, Response
 	# get and sanitize params
     $artist = $request->getAttribute('artist');
     $artist = str_replace(' ', '%20', trim($artist));
-
-    # does the cache manager already contain this search?
     
     # query api through manager
     $songs = $api->get_songs($artist);
 
     # compute frequency through helper
     $overall_freq = array();
-    $overall_freq_formatted = $api->parse_all_lyrics($songs, $overall_freq);
+    $overall_freq_formatted = $api->parse_all_lyrics($songs, $overall_freq, $cache);
 
     # new response to return json
 	$res = $response->withJson($overall_freq_formatted)->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
@@ -37,7 +35,7 @@ $router->get('/api/wordcloud/new/{artist}', function (Request $request, Response
 });
 
 # get word cloud for merged set of artists (can be merged into previous route)
-$router->get('/api/wordcloud/merge/{artist}', function (Request $request, Response $response) use ($api) {
+$router->get('/api/wordcloud/merge/{artist}', function (Request $request, Response $response) use ($api, $cache) {
 	# get and sanitize params
     $artist = $request->getAttribute('artist');
     $artist = str_replace(' ', '%20', $artist);
@@ -58,6 +56,10 @@ $router->get('/api/lyrics/{artist}/{song}', function (Request $request, Response
 
 	# query api through manager
 	$lyrics = $api->get_lyrics($artist, $song);
+
+	# new response to return json
+	$res = $response->withJson($lyrics)->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+	return $res;
 });
 
 # get  suggestions for the search bar's dropdown
