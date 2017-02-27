@@ -182,7 +182,7 @@ class APIManager {
 		return $frequency_counts;
 	}
 
-	public function parse_all_lyrics(&$artist_and_song_list, &$overall_freq) {
+	public function parse_all_lyrics(&$artist_and_song_list, &$overall_freq, &$cache) {
 		$artist_name = $artist_and_song_list["artist"];
 		$song_list = $artist_and_song_list["songs"];
 
