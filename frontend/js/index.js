@@ -8,20 +8,6 @@ const MIN_LENGTH = 3;
 
 var textFieldState = NO_SELECT;
 
-var data = [{
-        name: 'Michael',
-        description: 'The Writer'
-    },
-    {
-        name: 'Ben',
-        description: 'The Other Writer'
-    },
-    {
-        name: 'Joel',
-        description: 'The CodeIgniter Writer'
-    }
-];
-
 $("#searchButton").click(function() {
 
   $("#vis").show();
@@ -34,8 +20,6 @@ $("#searchButton").click(function() {
     type : 'GET',
     url: 'http://localhost:8080/api/wordcloud/new/' + $artistName,
     success: function(data) {
-      tags = [];
-      update();
       tags = data;
       update();
     },
@@ -62,7 +46,6 @@ $("#automplete-1").autocomplete({
     source: function(request, response) {
 
         var $artistName = $("#automplete-1").val();
-        console.log($artistName);
 
         $.ajax({
             type : 'GET',
@@ -76,8 +59,6 @@ $("#automplete-1").autocomplete({
                       img: item.img
                     }
                 });
-
-                console.log(stringArray);
 
                 response(stringArray);
             },
