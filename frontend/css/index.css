@@ -72,3 +72,22 @@ h2 {
 .btn-class:focus {
     outline: none;
 }
+
+.list_item_container {
+    height: 90px;
+    padding: 0px;
+}
+
+.image {
+    width: 90px;
+    height: 90px;
+    float: left;
+}
+
+.description {
+    font-style: italic;
+    font-size: 1.1em;
+    color: gray;
+    padding: 5px;
+    margin: 5px;
+}

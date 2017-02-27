@@ -4,25 +4,36 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../vendor/autoload.php';
 require './APIManager.php';
+require './CacheManager.php';
 
 # define new api manager
 $api = new APIManager();
 
-# define new slim app router
+# define new cache manager
+$cache = new CacheManager();
+
+# define new slim app router and pass ip middleware
 $router = new \Slim\App;
+$router->add(new RKA\Middleware\IpAddress(false));
 
 # get word cloud for given artist
-$router->get('/api/wordcloud/new/{artist}', function (Request $request, Response $response) use ($api) {
+$router->get('/api/wordcloud/new/{artist}', function (Request $request, Response $response) use ($api, $cache) {
 	# get and sanitize params
     $artist = $request->getAttribute('artist');
-    $artist = str_replace(' ', '%20', $artist);
+    $artist = str_replace(' ', '%20', trim($artist));
+
+    # does the cache manager already contain this search?
     
     # query api through manager
     $songs = $api->get_songs($artist);
 
     # compute frequency through helper
     $overall_freq = array();
-    $api->parse_all_lyrics($songs, $overall_freq);
+    $overall_freq_formatted = $api->parse_all_lyrics($songs, $overall_freq);
+
+    # new response to return json
+	$res = $response->withJson($overall_freq_formatted)->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+	return $res;
 });
 
 # get word cloud for merged set of artists (can be merged into previous route)
@@ -53,6 +64,7 @@ $router->get('/api/lyrics/{artist}/{song}', function (Request $request, Response
 $router->get('/api/dropdown/suggestions/{search}', function (Request $request, Response $response) use ($api) {
 	# get params
 	$search = $request->getAttribute('search');
+	$search = str_replace(' ', '%20', trim($search));
 
 	# query api through manager
 	$suggestions = $api->get_search_suggestions($search);

@@ -3,7 +3,7 @@ class APIManager {
 
 	# musixmatch
 	private $mmAPI = 'http://api.musixmatch.com/ws/1.1/';
-	private $mmKey = '&apikey=a820a7147e13aa7c816324dc7c2c57b9';
+	private $mmKey = '&apikey=c313d54ba68386605c8e7e03c2778833';
 
 	# spotify
 	private $spAPI = 'https://api.spotify.com/v1/';
@@ -14,7 +14,7 @@ class APIManager {
 	# parameter: Search Input 
 	# return: Search Suggestions
 	public function get_search_suggestions($search) {
-		$response = file_get_contents($this->spAPI . "search?q=" . $search . "&type=artist&limit=5");
+		$response = file_get_contents($this->spAPI . "search?q={$search}&type=artist&limit=5");
 		$data = json_decode($response, true);
 		$suggestions = array();
 
@@ -77,7 +77,7 @@ class APIManager {
 	# parameter: Artist Name
 	# return: Spotify Artist ID
 	private function get_artist_id($artist) {
-		$response = file_get_contents($this->spAPI . "search?q=" . $artist . "&type=artist&limit=1");
+		$response = file_get_contents($this->spAPI . "search?q={$artist}&type=artist&limit=1");
 		$data = json_decode($response, true);
 
 		return @$data[artists][items][0][id];
@@ -87,7 +87,7 @@ class APIManager {
 	# parameter: Spotify Artist ID
 	# return: List of albums
 	private function get_albums($artistID) {
-		$response = file_get_contents($this->spAPI . "artists/" . $artistID . "/albums?limit=30");
+		$response = file_get_contents($this->spAPI . "artists/{$artistID}/albums?limit=30");
 		$data = json_decode($response, true);
 		$duplicates = array();
 		$albumIDs = array();
@@ -114,7 +114,7 @@ class APIManager {
 	# parameter: Spotify Album ID
 	# return: List of songs in this album
 	private function get_songs_from_album($albumID, &$arr) {
-		$response = file_get_contents($this->spAPI . "albums/" . $albumID . "/tracks");
+		$response = file_get_contents($this->spAPI . "albums/{$albumID}/tracks");
 		$data = json_decode($response, true);
 
 		foreach(@$data[items] as $song) {
@@ -127,9 +127,8 @@ class APIManager {
 	# get track id, given name of artist and track
 	private function get_track_id($artist, $track) {
 		$result = file_get_contents($this->mmAPI . "track.search?q_track={$track}&q_arist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
-
 		$all_track_names = json_decode($result, true);
-		$track_id = $all_track_names[message][body][track_list][0][track][track_id];
+		$track_id = @$all_track_names[message][body][track_list][0][track][track_id];
 
 		return $track_id;
 	}
@@ -139,9 +138,8 @@ class APIManager {
 		$track_id = $this->get_track_id($artist, $track);
 
 		$result = file_get_contents($this->mmAPI . "track.lyrics.get?track_id={$track_id}" . $this->mmKey);
-
 		$lyrics_json = json_decode($result, true);
-		$lyrics = $lyrics_json[message][body][lyrics][lyrics_body];
+		$lyrics = @$lyrics_json[message][body][lyrics][lyrics_body];
 
 		return $lyrics;
 	}
@@ -157,14 +155,12 @@ class APIManager {
 		$lyrics = str_replace("\n", " ", $lyrics);
 		$lyrics = substr($lyrics, 0, -50);
 
-		// echo $lyrics;
-
 		$array_of_words = explode(" ", $lyrics);
-		// print_r($array_of_words);
 
   		// Remove conjunctions
 		$array_of_words = array_diff($array_of_words, ["i", "you", "he", "she", "we", "you", "they", "and", "but", "or", "yet", "for", "nor", "so", "it", "", "the", "its", "if", "at", "to", "too", "then", "them", "when", "ill", "ive", "got", "be", "been", "was", "of", "aint", "me", "is", "what", "from", "here", "there", "where", "will", "would", "uh", "my", "on", "that", "im", "in", "with", "dont", "your", "this", "some", "how", "oh", "about", "these", "are", "can", "still", "cant", "youre", "cant", "have", "why", "went", "yours", "as", "had", "went", "should", "maybe", "every", "tryna", "going", "whose", "myself", "yourself", "herself", "hisself", "a"]);
 
+		// Compute Frequency counts
 		$frequency_counts = array();
 
 		foreach ($array_of_words as $word) {
@@ -200,10 +196,18 @@ class APIManager {
 		}
 
 		arsort($overall_freq);
-		print_r($overall_freq);
-		// print_r($song_frequency_list);
-	}
 
-	public function merge_all_lyrics()
+		// New array to format for front-end
+		$overall_freq_formatted = array();
+
+		foreach($overall_freq as $word => $freq) {
+			$entry = array();
+			$entry["key"] = $word;
+			$entry["value"] = $freq;
+			array_push($overall_freq_formatted, $entry);
+		}
+
+		return (sizeof($overall_freq_formatted) >= 250) ? array_slice($overall_freq_formatted, 0, 250) : $overall_freq_formatted; 
+	}
 }
 ?>
