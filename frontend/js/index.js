@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  $("#vis").hide();
+
 const NO_SELECT = false;
 const YES_SELECT = true;
 const MIN_LENGTH = 3;
@@ -22,7 +24,12 @@ var data = [{
 
 $("#searchButton").click(function() {
 
+  $("#vis").show();
+
   var $artistName = $("#automplete-1").val();
+  $artistName = $artistName[0].toUpperCase() + $artistName.slice(1)
+  document.getElementById("artist").innerHTML = "Artist: " + $artistName;
+
   $.ajax({
     type : 'GET',
     url: 'http://localhost:8080/api/wordcloud/new/' + $artistName,
@@ -67,7 +74,7 @@ $("#automplete-1").autocomplete({
                       artist: item.artist,
                       id: item.id,
                       img: item.img
-                    } 
+                    }
                 });
 
                 console.log(stringArray);
@@ -90,19 +97,39 @@ $("#automplete-1").autocomplete({
     minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
 
+    // old shit
+
+    // var $li = $('<li>'),
+    //     $img = $('<img style="object-fit:cover; width=50px; height=50px">');
+    //
+    // $img.attr({
+    //   src: item.img,
+    //   alt: item.artist
+    // });
+    //
+    // $li.attr('data-value', item.artist);
+    // $li.append('<a href="#">');
+    // $li.find('a').append($img).append(item.artist);
+
+    // new shit
+
     var $li = $('<li>'),
-        $img = $('<img style="object-fit:cover; width=50px; height=50px">');
+        $img = $('<img>');
+        $header = $('<h2>');
 
     $img.attr({
-      src: item.img,
-      alt: item.artist
+       src: item.img,
+       alt: item.artist
     });
 
-    $li.attr('data-value', item.artist);
-    $li.append('<a href="#">');
-    $li.find('a').append($img).append(item.artist);
+    $header.val(item.artist);
 
-    return $li.appendTo(ul)
+    $li.append($img);
+    $li.append($h2);
+    
+    ul.addClass("searchresults");
+
+    return $li.appendTo(ul);
 };
 
 });
