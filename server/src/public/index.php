@@ -58,7 +58,7 @@ $router->get('/api/lyrics/{artist}/{song}', function (Request $request, Response
 	$lyrics = $api->get_lyrics($artist, $song);
 
 	# new response to return json
-	$res = $response->withJson($overall_freq_formatted)->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+	$res = $response->withJson($lyrics)->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
 	return $res;
 });
 
