@@ -1,6 +1,0 @@
-{
-    "require": {
-        "slim/slim": "^3.7",
-        "akrabat/rka-ip-address-middleware": "^0.5.0"
-    }
-}
