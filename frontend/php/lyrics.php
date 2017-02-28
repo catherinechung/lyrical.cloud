@@ -18,7 +18,6 @@ function findSongLyrics($artist, $track) {
   $lyrics_json = json_decode($result, true);
   $lyrics = $lyrics_json[message][body][lyrics][lyrics_body];
 
-  // echo $lyrics;
   return $lyrics;
 }
 

@@ -100,19 +100,16 @@ $("#automplete-1").autocomplete({
 
     var $li = $('<li>'),
         $img = $('<img>');
-        $header = $('<h2>');
+        $header = $("<h3>" + item.artist + "</h3>");
 
     $img.attr({
        src: item.img,
        alt: item.artist
     });
 
-    $header.val(item.artist);
-
-    $li.append($img);
-    $li.append($header);
-    
-    ul.addClass("searchresults");
+    $li.append('<a href="#">');
+    $li.find('a').append($img).append($header);
+    $li.addClass("searchresults");
 
     return $li.appendTo(ul);
 };
