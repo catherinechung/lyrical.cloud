@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+  $.ajax({
+    type : 'GET',
+    url: 'http://localhost:8080/',
+    dataType: 'jsonp',
+  });
+
   $("#vis").hide();
 
 const NO_SELECT = false;
@@ -19,12 +25,13 @@ $("#searchButton").click(function() {
   $.ajax({
     type : 'GET',
     url: 'http://localhost:8080/api/wordcloud/new/' + $artistName,
+    dataType: 'jsonp',
     success: function(data) {
       tags = data;
       update();
     },
-    error: function(data) {
-      alert("PHP Function call failed");
+    error: function(err) {
+      console.log(err);
     }
   });
 
@@ -44,14 +51,12 @@ var getArray = function(JSONObject, givenKey) {
 // call AJAX function
 $("#automplete-1").autocomplete({
     source: function(request, response) {
-
-        var $artistName = $("#automplete-1").val();
-
+        var artistName = $("#automplete-1").val();
         $.ajax({
             type : 'GET',
-            url: 'http://localhost:8080/api/dropdown/suggestions/' + $artistName,
+            url: 'http://localhost:8080/api/dropdown/suggestions/' + artistName,
+            dataType: 'jsonp',
             success: function(data) {
-
                 var stringArray = $.map(data, function(item) {
                     return {
                       artist: item.artist,
@@ -59,13 +64,12 @@ $("#automplete-1").autocomplete({
                       img: item.img
                     }
                 });
-
                 response(stringArray);
             },
-            error: function(data) {
-                alert("PHP Function call failed");
+            error: function(err) {
+                console.log(err);
             }
-        })
+        });
     },
     focus: function(event, ui) {
       event.preventDefault();
@@ -106,7 +110,7 @@ $("#automplete-1").autocomplete({
     $header.val(item.artist);
 
     $li.append($img);
-    $li.append($h2);
+    $li.append($header);
     
     ul.addClass("searchresults");
 
