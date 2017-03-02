@@ -35,7 +35,6 @@ $(document).ready(function() {
     update();
   }
 
-// hiding doe
 $("#artistLabel").hide();
 
 $("#searchButton").click(function() {
@@ -49,7 +48,7 @@ $("#searchButton").click(function() {
   $("#shareButton").show();
 
   var $artistName = $("#automplete-1").val();
-  $("#artistLabel").html("Artist(s): " + $artistName);
+  $("#artistLabel").html("Artist: " + $artistName);
 
   $.ajax({
     type : 'GET',
@@ -68,80 +67,49 @@ $("#searchButton").click(function() {
 
 });
 
-$("#addButton").click(function() {
-  $("#vis").show();
-
-  var $currentArtists = $("#artistLabel").text();
-  var $artistName = $("#automplete-1").val();
-  $artistName = $artistName[0].toUpperCase() + $artistName.slice(1);
-  $("#artistLabel").html($currentArtists + ", " + $artistName);
-
-  $.ajax({
-    type : 'GET',
-    url: 'http://localhost:8080/api/wordcloud/merge/' + $artistName,
-    dataType: 'jsonp',
-    success: function(data) {
-      tags = data;
-      update();
-    },
-    error: function(err) {
-      console.log(err);
-    }
-  });
-});
-
 $("#shareButton").click(function() {
-
-  html2canvas(document.getElementById('vis')).then(function(canvas) {
-    var img = canvas.toDataURL();
-    FB.ui({
-      method: 'share',
-      display: 'popup',
-      href: img,
-    }, function(response){});
-  });
   
-  // html2canvas(document.getElementById('vis')).then(function(canvas) {
-  //     var img = canvas.toDataURL();
+  html2canvas(document.getElementById('vis')).then(function(canvas) {
+      // convert the div that contains the word cloud into a png
+      var img = canvas.toDataURL("image/png");
+      img = img.replace(/^data:image\/\w+;base64,/,"");
 
-  //     $.ajax({
-  //       type : 'POST',
-  //       url: 'https://api.imgur.com/3/upload',
-  //       dataType: 'jsonp',
-  //       data: {
-  //         image: img
-  //       },
-  //       header: {
-  //         Authorization: '27de9b3b08982d2'
-  //       },
-    
-  //       success: function(data) {
-  //         console.log(data);
-  //         //var url = 
-  //         FB.ui({
-  //           method: 'share',
-  //           display: 'popup',
-  //           href: 'https://www.google.com',
-  //         }, function(response){});
-  //       },
-  //       error: function(err) {
-  //         //console.log(err);
-  //       }
-  //     });
-  // });
+      // AJAX function to turn image into a url
+      $.ajax({
+        url: "http://data-uri-to-img-url.herokuapp.com/images.json",
+        type : 'POST',
+        data: {'image': {'data_uri':img}},
+        xhrFields: {
+          withCredentials: false
+        },
+        success: function(data) {
+          // FB share dialog
+          FB.ui({
+            method: 'share',
+            display: 'popup',
+            href: data.url,
+            title: 'lyrical.cloud',
+            description: 'Want to know what your favorite artists are saying?',
+          }, function(response){});
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+  });
 });
 
 // adding any extra characters
 $("#automplete-1").keyup(function() {
 
-  $("#searchButton").prop("disabled", true);
-  $("#addButton").prop("disabled", true);
+$("#searchButton").prop("disabled", true);
+$("#addButton").prop("disabled", true);
 
-  $("#searchButton").removeClass("btn-class");
-  $("#searchButton").addClass("btn-class-disabled");
+$("#searchButton").removeClass("btn-class");
+$("#searchButton").addClass("btn-class-disabled");
 
-  $("#addButton").removeClass("btn-class");
-  $("#addButton").addClass("btn-class-disabled");
+$("#addButton").removeClass("btn-class");
+$("#addButton").addClass("btn-class-disabled");
 
 });
 
@@ -186,7 +154,6 @@ $("#automplete-1").autocomplete({
   minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
 
-    // new shit
     var $li = $('<li>'),
     $img = $('<img>');
     $header = $("<h3>" + item.artist + "</h3>");
