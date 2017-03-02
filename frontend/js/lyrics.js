@@ -5,14 +5,9 @@ $(document).ready(function() {
     var songName = localStorage.getItem('songName');
     var artist = localStorage.getItem('artist');
     var word = " " + localStorage.getItem('word')+ " ";
-    //console.log(word);
     var lyrics;
 
-    //var songName = song.songName;
-    //var artist = song.artist;
-    //var word = " " + song.word + " ";
-    //lyrics = song.lyrics;
-
+    //query API for lyrics
     $.ajax({
       type: 'get',
       url: 'http://localhost:8080/api/lyrics/' + artist + '/' + songName,
@@ -21,7 +16,8 @@ $(document).ready(function() {
        console.log(data);
      }
    });
-     //query musixmatch given song and artist to get lyrics
+
+    //update elements on page
 
      document.title = songName + " by " + artist;
      document.getElementById("title").innerHTML = songName + " by " + artist;
