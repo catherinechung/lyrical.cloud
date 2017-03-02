@@ -3,7 +3,7 @@ class APIManager {
 
 	# musixmatch
 	private $mmAPI = 'http://api.musixmatch.com/ws/1.1/';
-	private $mmKey = '&apikey=91c7da1691fedd226238dcb48e41adae';
+	private $mmKey = '&apikey=abf19a78d106baa3210f5cc4691f4131';
 
 	# spotify
 	private $spAPI = 'https://api.spotify.com/v1/';
@@ -117,8 +117,14 @@ class APIManager {
 		$response = file_get_contents($this->spAPI . "albums/{$albumID}/tracks");
 		$data = json_decode($response, true);
 
+		$count = 0;
 		foreach(@$data[items] as $song) {
+			$count++;
 			$arr[] = strtolower(str_replace(' ', '+', @$song[name]));
+
+			if($count == 5) {
+				return;
+			}
 		}
 	}
 
