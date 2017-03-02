@@ -19,6 +19,7 @@ $(document).ready(function() {
     $("#addButton").prop("disabled", true);
     $("#addButton").hide();
     $("#shareButton").hide();
+    $("#artistLabel").html("Artist(s): ");
   }
   else if(localStorage.getItem('searchState') == YES_SEARCH) {
     $("#searchButton").prop("disabled", false);
@@ -29,13 +30,13 @@ $(document).ready(function() {
 
     $("#vis").show();
     $("#artistLabel").show();
-    $("#artistLabel").html("Artist: " + localStorage.getItem('artistName'));
+    $("#artistLabel").html("Artist(s): " + localStorage.getItem('artistName'));
 
     tags = JSON.parse(localStorage.getItem('tags'));
     update();
   }
 
-$("#artistLabel").hide();
+//$("#artistLabel").hide();
 
 $("#searchButton").click(function() {
   $('#vis').hide();
@@ -47,7 +48,7 @@ $("#searchButton").click(function() {
   $("#shareButton").show();
 
   var $artistName = $("#automplete-1").val();
-  $("#artistLabel").html("Artist: " + $artistName);
+  $("#artistLabel").html("Artist(s): " + $artistName);
 
   $.ajax({
     type : 'GET',
@@ -67,7 +68,8 @@ $("#searchButton").click(function() {
 });
 
 $("#addButton").click(function() {
-  $("#vis").show();
+  $('#vis').hide();
+  document.getElementById("loader").style.display = "inline-block";
 
   var $currentArtists = $("#artistLabel").text();
   var $artistName = $("#automplete-1").val();
