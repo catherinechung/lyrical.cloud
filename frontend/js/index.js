@@ -51,35 +51,35 @@ $("#searchButton").click(function() {
 
 $("#shareButton").click(function() {
   
-  FB.ui({
-    method: 'share',
-    display: 'popup',
-    href:'https://www.google.com',
-  }, function(response){});
+  html2canvas(document.getElementById('vis')).then(function(canvas) {
+      //var img = canvas.toDataURL();
+      var img = canvas.toDataURL();
 
-  // html2canvas(document.getElementById('vis')).then(function(canvas) {
-  //     var img = canvas.toDataURL();
-  //     console.log(img);
-
-  //     $.ajax({
-  //       type : 'POST',
-  //       url: 'https://api.imgur.com/3/upload',
-  //       datatype: 'json',
-  //       data: {
-  //         'image': 
-  //       }
+      $.ajax({
+        type : 'POST',
+        url: 'https://api.imgur.com/3/upload',
+        datatype: 'json',
+        data: {
+          'image': img
+        },
+        header: {
+          'Authorization': 'Client-ID 27de9b3b08982d2'
+        },
     
-  //       success: function(data) {
-  //         var url = 
-  //       },
-  //       error: function(err) {
-  //         console.log(err);
-  //       }
-  //     });
-
-  //     var url = "https://www.facebook.com/sharer/sharer.php?u=" + img + ";src=sdkpreparse";
-  //     window.open(url);
-  // });
+        success: function(data) {
+          console.log(data);
+          //var url = 
+          FB.ui({
+            method: 'share',
+            display: 'popup',
+            href: 'https://www.google.com',
+          }, function(response){});
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+  });
 
 });
 
