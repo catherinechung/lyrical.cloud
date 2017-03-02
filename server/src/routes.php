@@ -5,15 +5,12 @@
 # In this file, we specify our application's HTTP routes 
 # and provide Closure callbacks to deal with user requests
 
+# helper variable so that we don't reinstantiate the cache
+
 # On landing route, store session-wide variables for future use
 # This includes instances of the API and Cache managers
 $app->get('/', function ($request, $response, $args) {
 	# if managers exist, return out of statement
-	if (array_key_exists('api', $_SESSION) && array_key_exists('cache', $_SESSION)) {
-		# new response to return headers
-		$res = $response->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
-		return $res;
-	}
 
 	# define new api manager
 	$api = new APIManager();
@@ -164,9 +161,10 @@ $app->get('/api/lyrics/{artist}/{song}', function ($request, $response, $args) {
 	# get query params for jsonp callback
 	$callback = $request->getQueryParam('callback');
 
-	# get params
+	# get params and sanitize song name
 	$artist = $args['artist'];
 	$song = $args['song'];
+	$song = str_replace(' ','-', $song);
 
 	# query api through manager
 	$track_id = $api->get_track_id($artist, $song);

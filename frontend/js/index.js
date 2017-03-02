@@ -1,12 +1,12 @@
-const NO_SEARCH = false;
-const YES_SEARCH = true;
+const NO_SEARCH = "false";
+const YES_SEARCH = "true";
 const MIN_LENGTH = 3;
 
 $(document).ready(function() {
-
   $.ajax({
     type : 'GET',
     url: 'http://localhost:8080/',
+    dataType: 'jsonp',
   });
 
   $("#vis").hide();
@@ -20,7 +20,7 @@ $(document).ready(function() {
     $("#addButton").hide();
     $("#shareButton").hide();
   }
-  else if(localStorage.getItem('searchState')) {
+  else if(localStorage.getItem('searchState') == YES_SEARCH) {
     $("#searchButton").prop("disabled", false);
     $("#addButton").prop("disabled", false);
 
@@ -38,7 +38,7 @@ $(document).ready(function() {
 $("#artistLabel").hide();
 
 $("#searchButton").click(function() {
-
+  console.log('down here');
   $('#vis').hide();
   document.getElementById("loader").style.display = "inline-block";
 
