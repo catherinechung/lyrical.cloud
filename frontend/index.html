@@ -41,7 +41,7 @@
 
     <!-- Logo -->
     <h1>lyrical.cloud</h1>
-    <h2 id="artist">Artist: </h2>
+    <h2 id="artistLabel"></h2>
 
     <div id="vis"></div>
     <script type="text/javascript" src="js/word-cloud.js"></script>
@@ -73,16 +73,6 @@
                         <!-- string = "https://www.facebook.com/sharer/sharer.php?u=" + string; -->
                         <button class="btn-class" id="shareButton"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgoogle.com%2F&amp;src=sdkpreparse">Share</a></button>
                         
-                        <script>
-                            document.getElementById('shareButton').onclick = function() {
-                                html2canvas([document.getElementById('vis')], {
-                                    onrendered: function(canvas) {
-                                        var imageData = canvas.toDataURL('image/png', 1.0);
-                                        window.open(imageData);
-                                    }
-                                })
-                            };
-                        </script>
                     </div>
                 </div>
             </div>
