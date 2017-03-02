@@ -50,6 +50,29 @@ $("#searchButton").click(function() {
 
 });
 
+$("#addButton").click(function() {
+  $("#vis").show();
+
+  var $currentArtists = document.getElementById("artist").innerText;
+  var $artistName = $("#automplete-1").val();
+  $artistName = $artistName[0].toUpperCase() + $artistName.slice(1);
+  document.getElementById("artist").innerHTML = $currentArtists + ", " + $artistName;
+
+  $.ajax({
+    type : 'GET',
+    url: 'http://localhost:8080/api/wordcloud/merge/' + $artistName,
+    dataType: 'jsonp',
+    success: function(data) {
+      tags = data;
+      update();
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+
+});
+
 // adding any extra characters
 $("#automplete-1").keyup(function() {
 
