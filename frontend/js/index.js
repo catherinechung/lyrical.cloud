@@ -32,7 +32,7 @@ $("#searchButton").click(function() {
   $("#shareButton").show();
 
   var $artistName = $("#automplete-1").val();
-  $("#artistLabel").html("Artist: " + $artistName);
+  $("#artistLabel").html("Artist(s): " + $artistName);
 
   $.ajax({
     type : 'GET',
@@ -52,10 +52,10 @@ $("#searchButton").click(function() {
 $("#addButton").click(function() {
   $("#vis").show();
 
-  var $currentArtists = document.getElementById("artist").innerText;
+  var $currentArtists = $("#artistLabel").text();
   var $artistName = $("#automplete-1").val();
   $artistName = $artistName[0].toUpperCase() + $artistName.slice(1);
-  document.getElementById("artist").innerHTML = $currentArtists + ", " + $artistName;
+  $("#artistLabel").html($currentArtists + ", " + $artistName);
 
   $.ajax({
     type : 'GET',
