@@ -80,7 +80,7 @@ function draw(data, bounds) {
             url: 'http://localhost:8080/api/songlist/' + datum["text"],
             dataType: 'jsonp',
             success: function(data) {
-                localStorage.setItem('songlist', data);
+                localStorage.setItem('songlist', JSON.stringify(data));
                 window.location.href = "songList.html";
             },
             error: function(err) {

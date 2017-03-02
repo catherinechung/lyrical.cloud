@@ -1,39 +1,37 @@
-
-// localStorage.getItem('artist')
-var artist = "Drake";
-
 $(document).ready(function() {
 
   // Set the title of the Song List page
   var songlist = localStorage.getItem('songlist');
   var word = localStorage.getItem('word');
-  document.getElementById("songListTitle").innerHTML = word;
-
-  console.log(so)
-
-  // Populate song list
-  var songs = [
-          name = ['One Dance','Hotline Bling', 'Fake Love', 'Headlines', 'Jumpman'],
-          frequency = ['10','9','8', '7', '6']
-      ];
+  $("#songListTitle").html(word);
 
   function makeOL() {
       // Create the list element
       var list = document.createElement('ol');
 
-      for (var key in songlist) {
-          // Create the list item
-          var item = document.createElement('li');
+      $.each(JSON.parse(songlist), function(key, value) {
+        // Create the list item
+        var item = document.createElement('li');
 
-          // Set its contents
-          item.appendChild(document.createTextNode(key +" " + "(" + songlist[key] + ")"));
+        // get frequency and artist name
+        var freq = value["frequency"];
+        var artist_name = value["artist_name"];
 
-          // Create link to respective lyrics page
-          item.addEventListener("click", loadSongLyricsPage(this, key), false);
+        // Set its contents
+        item.appendChild(document.createTextNode(key + " " + "(" + freq + ")"));
 
-          // Add it to the list
-          list.appendChild(item);
-      }
+        (function (key, artist_name, word) {
+          item.addEventListener('click', function (event) {
+            localStorage.setItem('songName', key);
+            localStorage.setItem('artist', artist_name);
+            window.location.href = "lyrics.html";
+          },
+          false);
+        }(key, artist_name, word));
+
+        // Add it to the list
+        list.appendChild(item);
+      });
 
       // Return the constructed list
       return list;
@@ -47,14 +45,4 @@ $(document).ready(function() {
 // Back button, returns to Word Cloud Page
 function returnWordCloud() {
     window.location.href = "index.html";
-}
-
-// Pass song, word, and artist to lyrics page
-function loadSongLyricsPage(item, song) {
-  return function(event) {
-    localStorage.setItem('songName', song);
-    localStorage.setItem('word', word);
-    localStorage.setItem('artist', artist);
-    window.location.href = "lyrics.html";
-  }
 }
