@@ -24,7 +24,7 @@ $("#artistLabel").hide();
 
 $("#searchButton").click(function() {
 
-  $("#vis").show();
+  document.getElementById("loader").style.display = "inline-block";
 
   searchState = YES_SEARCH;
   $("#artistLabel").show();
