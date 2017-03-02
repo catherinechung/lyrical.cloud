@@ -191,7 +191,7 @@ $app->get('/api/songlist/{word}', function ($request, $response, $args) {
 	$word = $args['word'];
 
 	# query api through manager
-	$song_list = $api->get_song_list($word, $cache);
+	$song_list = $api->get_song_list($word, $cache->search_freq_cache());
 	$song_list = json_encode($song_list);
 
 	# convert current response to jsonp callback with new response

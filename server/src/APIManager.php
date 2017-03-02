@@ -244,12 +244,11 @@ class APIManager {
 		return (sizeof($overall_freq_formatted) >= 250) ? array_slice($overall_freq_formatted, 0, 250) : $overall_freq_formatted;
 	}
 
-	public function get_song_list($word, $cache) {
+	public function get_song_list($word, $search_freq_cache) {
 		// Overall song to frequency map
 		$overall_list = array();
 
 		// Loop through the search freq cache
-		$search_freq_cache = $cache->search_freq_cache();
 		foreach($search_freq_cache as $artist) {
 			foreach($artist as $song) {
 				$keys = array_keys($song);
