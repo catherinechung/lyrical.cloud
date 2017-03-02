@@ -13,6 +13,7 @@ const YES_SEARCH = true;
 const MIN_LENGTH = 3;
 
 var searchedState = NO_SEARCH;
+var artistID;
 
 // initial states
 $("#searchButton").prop("disabled", true);
@@ -36,7 +37,7 @@ $("#searchButton").click(function() {
 
   $.ajax({
     type : 'GET',
-    url: 'http://localhost:8080/api/wordcloud/new/' + $artistName,
+    url: 'http://localhost:8080/api/wordcloud/new/' + artistID,
     dataType: 'jsonp',
     success: function(data) {
       tags = data;
@@ -96,6 +97,8 @@ $("#automplete-1").autocomplete({
     select: function(event, ui) {
       event.preventDefault();
       $("#automplete-1").val(ui.item.artist);
+      artistID = ui.item.id);
+
       $("#searchButton").prop("disabled", false);
       $("#searchButton").removeClass("btn-class-disabled");
       $("#searchButton").addClass("btn-class");
