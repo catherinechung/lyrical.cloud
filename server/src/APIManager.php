@@ -5,8 +5,24 @@ class APIManager {
 	private $mmAPI = 'http://api.musixmatch.com/ws/1.1/';
 	private $mmKey = '&apikey=abf19a78d106baa3210f5cc4691f4131';
 
+	# musixmatch key pool
+	private $pool = array(
+	 	'abf19a78d106baa3210f5cc4691f4131',
+		'f98efb0dc9d2acf50ad64eb7030a5cb9',
+		'f44511b2ac53fafcabb1a9e0fa869d70',
+		'd8ecb71526f7afc19fd8a60eb6c52edd',
+		'bffd0b0ab0d91d291a79337e3a6f1f37',
+		'c6c91128a535c081960a8c295a0cef93'
+	);
+
 	# spotify
 	private $spAPI = 'https://api.spotify.com/v1/';
+
+	/* HELPER FUNCTIONS */
+
+	public function switchKeys() {
+	 	$this->mmKey = ("&apikey=" . $this->pool[array_rand($this->pool, 1)]);
+	}
 
 	/* SPOTIFY API METHODS */
 
@@ -132,6 +148,7 @@ class APIManager {
 
 	# get track id, given name of artist and track
 	public function get_track_id($artist, $track) {
+		// print_r($this->mmAPI . "track.search?q_track={$track}&q_artist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
 		$result = file_get_contents($this->mmAPI . "track.search?q_track={$track}&q_artist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
 		$all_track_names = json_decode($result, true);
 		$track_id = @$all_track_names[message][body][track_list][0][track][track_id];

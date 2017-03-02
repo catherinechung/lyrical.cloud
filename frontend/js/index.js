@@ -30,7 +30,7 @@ $(document).ready(function() {
 
     $("#vis").show();
     $("#artistLabel").show();
-    $("#artistLabel").html("Artist(s): " + localStorage.getItem('artistName'));
+    $("#artistLabel").html("Artist(s): " + localStorage.getItem('artistLabelFull'));
 
     tags = JSON.parse(localStorage.getItem('tags'));
     update();
@@ -57,6 +57,7 @@ $("#searchButton").click(function() {
     success: function(data) {
       localStorage.setItem('tags', JSON.stringify(data));
       localStorage.setItem('artistName', $artistName);
+      localStorage.setItem('artistLabelFull', $artistName);
       tags = data;
       update();
     },
@@ -74,7 +75,10 @@ $("#addButton").click(function() {
   var $currentArtists = $("#artistLabel").text();
   var $artistName = $("#automplete-1").val();
   $artistName = $artistName[0].toUpperCase() + $artistName.slice(1);
-  $("#artistLabel").html($currentArtists + ", " + $artistName);
+  $artists = localStorage.getItem('artistLabelFull');
+  $artists += ", " + $artistName;
+  localStorage.setItem('artistLabelFull', $artists);
+  $("#artistLabel").html("Artist(s): " + $artists);
 
   $.ajax({
     type : 'GET',

@@ -67,6 +67,9 @@ $app->get('/api/wordcloud/new/{artist}', function ($request, $response, $args) {
 	$api = unserialize($_SESSION['api']);
 	$cache = unserialize($_SESSION['cache']);
 
+	# change api key vlaue
+	$api->switchKeys();
+
 	# get query params for jsonp callback
 	$callback = $request->getQueryParam('callback');
 
@@ -92,8 +95,9 @@ $app->get('/api/wordcloud/new/{artist}', function ($request, $response, $args) {
 	    $overall_freq_formatted = $api->add_artist_to_wordcloud($songs, $cache);
 	}
 
-	# reserialize cache into session
+	# reserialize cache and api into session
 	$_SESSION['cache'] = serialize($cache);
+	$_SESSION['api'] = serialize($api);
 
 	# encode into json
 	$overall_freq_formatted = json_encode($overall_freq_formatted);
