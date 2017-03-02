@@ -50,7 +50,7 @@ $("#searchButton").click(function() {
   $("#shareButton").show();
 
   var $artistName = $("#automplete-1").val();
-  $("#artistLabel").html("Artist: " + $artistName);
+  $("#artistLabel").html("Artist(s): " + $artistName);
 
   $.ajax({
     type : 'GET',
@@ -69,43 +69,66 @@ $("#searchButton").click(function() {
 
 });
 
+$("#addButton").click(function() {
+  $("#vis").show();
+
+  var $currentArtists = $("#artistLabel").text();
+  var $artistName = $("#automplete-1").val();
+  $artistName = $artistName[0].toUpperCase() + $artistName.slice(1);
+  $("#artistLabel").html($currentArtists + ", " + $artistName);
+
+  $.ajax({
+    type : 'GET',
+    url: 'http://localhost:8080/api/wordcloud/merge/' + $artistName,
+    dataType: 'jsonp',
+    success: function(data) {
+      tags = data;
+      update();
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
+});
+
 $("#shareButton").click(function() {
 
   html2canvas(document.getElementById('vis')).then(function(canvas) {
     var img = canvas.toDataURL();
-    console.log(img);
-    var url = "https://www.facebook.com/sharer/sharer.php?u=" + img + ";src=sdkpreparse";
-    window.open(url);
+    FB.ui({
+      method: 'share',
+      display: 'popup',
+      href: img,
+    }, function(response){});
   });
   
-  FB.ui({
-    method: 'share',
-    display: 'popup',
-    href:'https://www.google.com',
-  }, function(response){});
-
   // html2canvas(document.getElementById('vis')).then(function(canvas) {
   //     var img = canvas.toDataURL();
-  //     console.log(img);
 
   //     $.ajax({
   //       type : 'POST',
   //       url: 'https://api.imgur.com/3/upload',
-  //       datatype: 'json',
+  //       dataType: 'jsonp',
   //       data: {
-  //         'image': 
-  //       }
+  //         image: img
+  //       },
+  //       header: {
+  //         Authorization: '27de9b3b08982d2'
+  //       },
     
   //       success: function(data) {
-  //         var url = 
+  //         console.log(data);
+  //         //var url = 
+  //         FB.ui({
+  //           method: 'share',
+  //           display: 'popup',
+  //           href: 'https://www.google.com',
+  //         }, function(response){});
   //       },
   //       error: function(err) {
-  //         console.log(err);
+  //         //console.log(err);
   //       }
   //     });
-
-  //     var url = "https://www.facebook.com/sharer/sharer.php?u=" + img + ";src=sdkpreparse";
-  //     window.open(url);
   // });
 });
 

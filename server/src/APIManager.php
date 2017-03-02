@@ -131,8 +131,8 @@ class APIManager {
 	/* MUSIXMATCH API METHODS */
 
 	# get track id, given name of artist and track
-	private function get_track_id($artist, $track) {
-		$result = file_get_contents($this->mmAPI . "track.search?q_track={$track}&q_arist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
+	public function get_track_id($artist, $track) {
+		$result = file_get_contents($this->mmAPI . "track.search?q_track={$track}&q_artist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
 		$all_track_names = json_decode($result, true);
 		$track_id = @$all_track_names[message][body][track_list][0][track][track_id];
 
@@ -255,18 +255,28 @@ class APIManager {
 		$overall_list = array();
 
 		// Loop through the search freq cache
-		foreach($search_freq_cache as $artist) {
-			foreach($artist as $song) {
+		foreach($search_freq_cache as $artist => $total_map) {
+			foreach($total_map as $song) {
 				$keys = array_keys($song);
 				$song_map = $song[$keys[1]];
 
 				if (array_key_exists($word, $song_map)) {
 					$song_mm_id = $song[$keys[0]];
 					$song_name = $this->get_song_name($song_mm_id);
-					$overall_list[$song_name] = $song_map[$word];
+					$wrapped_info = array();
+					$wrapped_info["frequency"] = $song_map[$word];
+					$wrapped_info["artist_name"] = $artist;
+					$overall_list[$song_name] = $wrapped_info;
 				}
 			}
 		}
+
+		// usort($overall_list, function($one, $two) {
+		// 	$kSetOne = array_keys($one);
+		// 	$kSetTwo = array_keys($two);
+
+		// 	return $one[$kSetOne[0]]["frequency"] > $two[$kSetTwo[0]]["frequency"];
+		// });
 
 		// Return overall list
 		return $overall_list;
