@@ -26,22 +26,42 @@
 <!-- Body -->
 
 <body>
-    <div id="fb-root"></div>
+<!--     <script src="//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=399203557098299"></script>
+ -->    
+ <div id="fb-root"></div>
     <script>
 
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '399203557098299',
+          xfbml      : true,
+          version    : 'v2.8'
+        });
+
+        FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s); 
+        js.id = id;    
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        // #xfbml=1&version=v2.8&appId=399203557098299
+        fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+
     </script>
 
     <!-- Logo -->
     <h1>lyrical.cloud</h1>
     <h2 id="artistLabel"></h2>
+
+    <div id="loader"></div>
 
     <div id="vis"></div>
     <script type="text/javascript" src="js/word-cloud.js"></script>
@@ -64,15 +84,11 @@
                         <button class="btn-class-disabled" id="searchButton">Search</button>
                     </div>
                     <div class="col-xs-4">
-                        <button class="btn-class" id="addButton" style="margin-left: 10%">Add</button>
+                        <button class="btn-class-disabled" id="addButton" style="margin-left: 10%">Add</button>
                     </div>
                     <div class="col-xs-4">
-                    
-                        <!-- var string = document.getElementById('vis').toDataURL();
-                        console.log(string); -->
-                        <!-- string = "https://www.facebook.com/sharer/sharer.php?u=" + string; -->
-                        <button class="btn-class" id="shareButton"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgoogle.com%2F&amp;src=sdkpreparse">Share</a></button>
-                        
+                        <button class="btn-class" id="shareButton">Share</button>
+                        <!-- <button class="fb-share-button" data-href="https://www.google.com/" id="shareButton" data-type="button">Share</button> -->
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ var w = window.innerWidth,
     h = 500;
 
 var max,
-        fontSize;
+    fontSize;
 
 var layout = d3.layout.cloud()
         .timeInterval(Infinity)
@@ -31,6 +31,7 @@ window.onresize = function(event) {
 
 function draw(data, bounds) {
     svg.remove();
+
     svg = d3.select("#vis").append("svg").attr("width", w).attr("height", h);
 
     vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
@@ -74,6 +75,7 @@ function draw(data, bounds) {
             .style("opacity", 1);
     text.on("click", datum => { 
         localStorage.setItem('word', datum["text"]);
+        localStorage.setItem('searchState', YES_SEARCH);
 
         $.ajax({
             type: 'GET',
@@ -105,7 +107,13 @@ function draw(data, bounds) {
                 return d.text;
             });
 
+    showPage();
     vis.transition().attr("transform", "translate(" + [w >> 1, h >> 1] + ")scale(" + scale + ")");
+}
+
+function showPage() {
+    document.getElementById("loader").style.display = "none";
+    $("#vis").show();
 }
 
 function update() {
