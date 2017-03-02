@@ -98,6 +98,8 @@ $("#shareButton").click(function() {
             method: 'share',
             display: 'popup',
             href: data.url,
+            title: 'lyrical.cloud',
+            description: 'Want to know what your favorite artists are saying?',
           }, function(response){});
         },
         error: function(err) {
