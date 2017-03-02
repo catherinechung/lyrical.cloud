@@ -175,3 +175,31 @@ $app->get('/api/lyrics/{artist}/{song}', function ($request, $response, $args) {
 	$new_response->getBody()->write($callback);
 	return $new_response;
 });
+
+# On this route, perform all operations to get the list of songs
+# that a particular word appears in, as well as the chosen word's
+# frequency within each song
+$app->get('/api/songlist/{word}', function ($request, $response, $args) {
+	# get managers from session
+	$api = unserialize($_SESSION['api']);
+	$cache = unserialize($_SESSION['cache']);
+
+	# get query params for jsonp callback
+	$callback = $request->getQueryParam('callback');
+
+	# get param
+	$word = $args['word'];
+
+	# query api through manager
+	$song_list = $api->get_song_list($word, $cache);
+	$song_list = json_encode($song_list);
+
+	# convert current response to jsonp callback with new response
+	$new_response = $response->withHeader('Content-Type', 'application/javascript');
+
+	# create string with callback and lyrics data
+	# write it to the body of the new response and return
+	$callback = "{$callback}({$song_list})";
+	$new_response->getBody()->write($callback);
+	return $new_response;
+});

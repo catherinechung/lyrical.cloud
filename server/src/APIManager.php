@@ -133,6 +133,14 @@ class APIManager {
 		return $track_id;
 	}
 
+	# get name of song, given musix match id
+	private function get_song_name($track_id) {
+		$result = file_get_contents($this->mmAPI . "track.get?track_id={$track_id}" . $this->mmKey);
+		$data = json_decode($result, true);
+
+		return @$data[message][body][track][track_name];
+	}
+
 	# get lyrics for track, given a spotify track id
 	public function get_lyrics($track_id) {
 		$result = file_get_contents($this->mmAPI . "track.lyrics.get?track_id={$track_id}" . $this->mmKey);
@@ -215,6 +223,9 @@ class APIManager {
 		// Filter per-artist-per-song frequency information into server search cache
 		$cache->insert_into_search_cache($artist_name, $song_frequency_list);
 
+		// Filter per-artist-per-song frequency information into the lifetime cache
+		$cache->insert_into_lifetime_cache($artist_name, $song_frequency_list);
+
 		// Sort overall freqs for this artist in desc. freq. order
 		arsort($overall_freq);
 
@@ -231,6 +242,29 @@ class APIManager {
 		}
 
 		return (sizeof($overall_freq_formatted) >= 250) ? array_slice($overall_freq_formatted, 0, 250) : $overall_freq_formatted;
+	}
+
+	public function get_song_list($word, $cache) {
+		// Overall song to frequency map
+		$overall_list = array();
+
+		// Loop through the search freq cache
+		$search_freq_cache = $cache->search_freq_cache();
+		foreach($search_freq_cache as $artist) {
+			foreach($artist as $song) {
+				$keys = array_keys($song);
+				$song_map = $song[$keys[1]];
+
+				if (array_key_exists($word, $song_map)) {
+					$song_mm_id = $song[$keys[0]];
+					$song_name = $this->get_song_name($song_mm_id);
+					$overall_list[$song_name] = $song_map[$word];
+				}
+			}
+		}
+
+		// Return overall list
+		return $overall_list;
 	}
 }
 ?>

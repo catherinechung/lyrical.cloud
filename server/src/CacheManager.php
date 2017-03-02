@@ -7,20 +7,33 @@ class CacheManager {
 	# holds search freq cache (per-search [aka per-artist] per-song)
 	private $search_freq_cache = array();
 
+	# holds lifetime freq cache (per total lifetime of server)
+	private $lifetime_freq_cache = array();
+
 	# accessor helper function to access overall cache
 	public function overall_freq_cache() {
 		return $this->overall_freq_cache;
 	}
 
+	# accessor helper function to access search freq cache
+	public function search_freq_cache() {
+		return $this->search_freq_cache;
+	}
+
 	# does the search cache contain the artist?
 	public function contains($artist) {
-		return array_key_exists($artist, $this->search_freq_cache);
+		return array_key_exists($artist, $this->lifetime_freq_cache);
 	}
 
 	# inserts a new search entry into the per-artist
 	# per-song frequency cache
 	public function insert_into_search_cache($artist_name, $entry) {
 		$this->search_freq_cache[$artist_name] = $entry;
+	}
+
+	# inserts a new search entry into the lifetime server cache
+	public function insert_into_lifetime_cache($artist_name, $entry) {
+		$this->lifetime_freq_cache[$artist_name] = $entry;
 	}
 
 	# merge two different overall freq maps into one, 
@@ -32,10 +45,10 @@ class CacheManager {
 	}
 
 	# takes an artist's name and outputs an overall frequency 
-	# map for the artist, based on cached information
+	# map for the artist, based on cached information over server lifetime
 	public function get_overall_frequencies($artist) {
 		# get specific artist-song freq list from param
-		$artist_song_frequencies_list = $this->search_freq_cache[$artist];
+		$artist_song_frequencies_list = $this->lifetime_freq_cache[$artist];
 
 		# declare overall frequency list
 		$overall_freq = array();
@@ -70,7 +83,7 @@ class CacheManager {
 
 	# clear out the cache
 	public function clear() {
-		# reinstantiate
+		# reinstantiate overall and search cache, not lifetime cache!
 		$this->overall_freq_cache = array();
 		$this->search_freq_cache = array();
 	}
