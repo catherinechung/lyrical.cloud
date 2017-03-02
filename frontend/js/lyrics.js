@@ -5,7 +5,6 @@ $(document).ready(function() {
     var songName = localStorage.getItem('songName');
     var artist = localStorage.getItem('artist');
     var word = " " + localStorage.getItem('word')+ " ";
-    //console.log(word);
     var lyrics;
 
     //var songName = song.songName;

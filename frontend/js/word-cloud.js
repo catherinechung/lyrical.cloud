@@ -74,6 +74,7 @@ function draw(data, bounds) {
             .style("opacity", 1);
     text.on("click", datum => { 
         localStorage.setItem('word', datum["text"]);
+        localStorage.setItem('searchState', YES_SEARCH);
 
         $.ajax({
             type: 'GET',
