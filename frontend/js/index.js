@@ -14,6 +14,8 @@ const MIN_LENGTH = 3;
 
 var textFieldState = NO_SELECT;
 
+$("#searchButton").prop("disabled", true);
+
 $("#searchButton").click(function() {
 
   $("#vis").show();
@@ -37,16 +39,24 @@ $("#searchButton").click(function() {
 
 });
 
-// grab the artist names/image
-var getArray = function(JSONObject, givenKey) {
-  var returnArray =[];
-  $.each(JSONObject, function(key, data) {
-         if(key == givenKey) {
-           returnArray = data;
-         }
-  });
-  return returnArray;
-}
+
+$("#shareButton").click(function() {
+
+  $(this).prop("disabled", true);
+
+  console.log("HELLO BABU!"); 
+
+});
+
+$("automplete-1").keyup(function() {
+
+  $("#searchButton").prop("disabled", true);
+  $("#searchButton").removeClass("btn-class");
+  $("#searchButton").addClass("btn-class-disabled");
+
+  console.log("HELLO BABU");
+
+});
 
 // call AJAX function
 $("#automplete-1").autocomplete({
@@ -78,23 +88,12 @@ $("#automplete-1").autocomplete({
     select: function(event, ui) {
       event.preventDefault();
       $("#automplete-1").val(ui.item.artist);
+      $("#searchButton").prop("disabled", false);
+      $("#searchButton").removeClass("btn-class-disabled");
+      $("#searchButton").removeClass("btn-class");
     },
     minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
-
-    // old shit
-
-    // var $li = $('<li>'),
-    //     $img = $('<img style="object-fit:cover; width=50px; height=50px">');
-    //
-    // $img.attr({
-    //   src: item.img,
-    //   alt: item.artist
-    // });
-    //
-    // $li.attr('data-value', item.artist);
-    // $li.append('<a href="#">');
-    // $li.find('a').append($img).append(item.artist);
 
     // new shit
 
