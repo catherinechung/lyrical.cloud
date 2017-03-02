@@ -8,6 +8,13 @@
 # On landing route, store session-wide variables for future use
 # This includes instances of the API and Cache managers
 $app->get('/', function ($request, $response, $args) {
+	# if managers exist, return out of statement
+	if (array_key_exists('api', $_SESSION) && array_key_exists('cache', $_SESSION)) {
+		# new response to return headers
+		$res = $response->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+		return $res;
+	}
+
 	# define new api manager
 	$api = new APIManager();
 
