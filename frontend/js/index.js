@@ -51,12 +51,35 @@ $("#searchButton").click(function() {
 
 $("#shareButton").click(function() {
   
-  html2canvas(document.getElementById('vis')).then(function(canvas) {
-      var img = canvas.toDataURL();
-      console.log(img);
-      var url = "https://www.facebook.com/sharer/sharer.php?u=" + img + ";src=sdkpreparse";
-      window.open(url);
-    });
+  FB.ui({
+    method: 'share',
+    display: 'popup',
+    href:'https://www.google.com',
+  }, function(response){});
+
+  // html2canvas(document.getElementById('vis')).then(function(canvas) {
+  //     var img = canvas.toDataURL();
+  //     console.log(img);
+
+  //     $.ajax({
+  //       type : 'POST',
+  //       url: 'https://api.imgur.com/3/upload',
+  //       datatype: 'json',
+  //       data: {
+  //         'image': 
+  //       }
+    
+  //       success: function(data) {
+  //         var url = 
+  //       },
+  //       error: function(err) {
+  //         console.log(err);
+  //       }
+  //     });
+
+  //     var url = "https://www.facebook.com/sharer/sharer.php?u=" + img + ";src=sdkpreparse";
+  //     window.open(url);
+  // });
 
 });
 
