@@ -41,6 +41,7 @@ $("#artistLabel").hide();
 
 $("#searchButton").click(function() {
 
+  $('#vis').hide();
   document.getElementById("loader").style.display = "inline-block";
 
   searchState = YES_SEARCH;
