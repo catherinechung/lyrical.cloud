@@ -271,14 +271,7 @@ class APIManager {
 			}
 		}
 
-		// usort($overall_list, function($one, $two) {
-		// 	$kSetOne = array_keys($one);
-		// 	$kSetTwo = array_keys($two);
-
-		// 	return $one[$kSetOne[0]]["frequency"] > $two[$kSetTwo[0]]["frequency"];
-		// });
-
-		usort($overall_list, function ($a, $b) {
+		uasort($overall_list, function ($a, $b) {
 			$key_set_A = array_keys($a);
 			$key_set_B = array_keys($b);
 
