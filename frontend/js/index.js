@@ -36,7 +36,6 @@ $(document).ready(function() {
     update();
   }
 
-// hiding doe
 $("#artistLabel").hide();
 
 $("#searchButton").click(function() {
@@ -70,20 +69,13 @@ $("#searchButton").click(function() {
 });
 
 $("#shareButton").click(function() {
-
-  // html2canvas(document.getElementById('vis')).then(function(canvas) {
-  //   var img = canvas.toDataURL();
-  //   FB.ui({
-  //     method: 'share',
-  //     display: 'popup',
-  //     href: img,
-  //   }, function(response){});
-  // });
   
   html2canvas(document.getElementById('vis')).then(function(canvas) {
+      // convert the div that contains the word cloud into a png
       var img = canvas.toDataURL("image/png");
       img = img.replace(/^data:image\/\w+;base64,/,"");
 
+      // AJAX function to turn image into a url
       $.ajax({
         url: "http://data-uri-to-img-url.herokuapp.com/images.json",
         type : 'POST',
@@ -92,8 +84,7 @@ $("#shareButton").click(function() {
           withCredentials: false
         },
         success: function(data) {
-          console.log(data);
-          console.log("it works");
+          // FB share dialog
           FB.ui({
             method: 'share',
             display: 'popup',
@@ -105,23 +96,21 @@ $("#shareButton").click(function() {
         error: function(err) {
           console.log(err);
         }
-
       });
-
   });
 });
 
 // adding any extra characters
 $("#automplete-1").keyup(function() {
 
-  $("#searchButton").prop("disabled", true);
-  $("#addButton").prop("disabled", true);
+$("#searchButton").prop("disabled", true);
+$("#addButton").prop("disabled", true);
 
-  $("#searchButton").removeClass("btn-class");
-  $("#searchButton").addClass("btn-class-disabled");
+$("#searchButton").removeClass("btn-class");
+$("#searchButton").addClass("btn-class-disabled");
 
-  $("#addButton").removeClass("btn-class");
-  $("#addButton").addClass("btn-class-disabled");
+$("#addButton").removeClass("btn-class");
+$("#addButton").addClass("btn-class-disabled");
 
 });
 
@@ -166,7 +155,6 @@ $("#automplete-1").autocomplete({
   minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
 
-    // new shit
     var $li = $('<li>'),
     $img = $('<img>');
     $header = $("<h3>" + item.artist + "</h3>");
