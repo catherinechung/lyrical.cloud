@@ -49,26 +49,37 @@ $("#searchButton").click(function() {
 
 });
 
-$("#addButton").click(function() {
-  $("#vis").show();
+$("#shareButton").click(function() {
+  
+  FB.ui({
+    method: 'share',
+    display: 'popup',
+    href:'https://www.google.com',
+  }, function(response){});
 
-  var $currentArtists = document.getElementById("artist").innerText;
-  var $artistName = $("#automplete-1").val();
-  $artistName = $artistName[0].toUpperCase() + $artistName.slice(1);
-  document.getElementById("artist").innerHTML = $currentArtists + ", " + $artistName;
+  // html2canvas(document.getElementById('vis')).then(function(canvas) {
+  //     var img = canvas.toDataURL();
+  //     console.log(img);
 
-  $.ajax({
-    type : 'GET',
-    url: 'http://localhost:8080/api/wordcloud/merge/' + $artistName,
-    dataType: 'jsonp',
-    success: function(data) {
-      tags = data;
-      update();
-    },
-    error: function(err) {
-      console.log(err);
-    }
-  });
+  //     $.ajax({
+  //       type : 'POST',
+  //       url: 'https://api.imgur.com/3/upload',
+  //       datatype: 'json',
+  //       data: {
+  //         'image': 
+  //       }
+    
+  //       success: function(data) {
+  //         var url = 
+  //       },
+  //       error: function(err) {
+  //         console.log(err);
+  //       }
+  //     });
+
+  //     var url = "https://www.facebook.com/sharer/sharer.php?u=" + img + ";src=sdkpreparse";
+  //     window.open(url);
+  // });
 
 });
 
@@ -119,6 +130,7 @@ $("#automplete-1").autocomplete({
     select: function(event, ui) {
       event.preventDefault();
       $("#automplete-1").val(ui.item.artist);
+
       $("#searchButton").prop("disabled", false);
       $("#searchButton").removeClass("btn-class-disabled");
       $("#searchButton").addClass("btn-class");
