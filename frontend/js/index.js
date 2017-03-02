@@ -8,21 +8,31 @@ $(document).ready(function() {
 
   $("#vis").hide();
 
-const NO_SELECT = false;
-const YES_SELECT = true;
+const NO_SEARCH = false;
+const YES_SEARCH = true;
 const MIN_LENGTH = 3;
 
-var textFieldState = NO_SELECT;
+var searchedState = NO_SEARCH;
 
+// initial states
 $("#searchButton").prop("disabled", true);
+$("#addButton").hide();
+$("#shareButton").hide();
+
+// hiding doe
+$("#artistLabel").hide();
 
 $("#searchButton").click(function() {
 
   $("#vis").show();
 
+  searchState = YES_SEARCH;
+  $("#artistLabel").show();
+  $("#addButton").show();
+  $("#shareButton").show();
+
   var $artistName = $("#automplete-1").val();
-  $artistName = $artistName[0].toUpperCase() + $artistName.slice(1)
-  document.getElementById("artist").innerHTML = "Artist: " + $artistName;
+  $("#artistLabel").html("Artist: " + $artistName);
 
   $.ajax({
     type : 'GET',
@@ -62,23 +72,22 @@ $("#addButton").click(function() {
 
 });
 
-
-$("#shareButton").click(function() {
-
-  $(this).prop("disabled", true);
-
-  console.log("HELLO BABU!"); 
-
-});
-
-$("automplete-1").keyup(function() {
+// adding any extra characters
+$("#automplete-1").keyup(function() {
 
   $("#searchButton").prop("disabled", true);
+
   $("#searchButton").removeClass("btn-class");
   $("#searchButton").addClass("btn-class-disabled");
+});
 
-  console.log("HELLO BABU");
+// removing extra characters
+$("#automplete-1").keyup(function() {
 
+  $("#searchButton").prop("disabled", true);
+ 
+  $("#searchButton").removeClass("btn-class");
+  $("#searchButton").addClass("btn-class-disabled");
 });
 
 // call AJAX function
@@ -106,20 +115,18 @@ $("#automplete-1").autocomplete({
     },
     focus: function(event, ui) {
       event.preventDefault();
-      $("#automplete-1").val(ui.item.artist);
     },
     select: function(event, ui) {
       event.preventDefault();
       $("#automplete-1").val(ui.item.artist);
       $("#searchButton").prop("disabled", false);
       $("#searchButton").removeClass("btn-class-disabled");
-      $("#searchButton").removeClass("btn-class");
+      $("#searchButton").addClass("btn-class");
     },
     minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
 
     // new shit
-
     var $li = $('<li>'),
         $img = $('<img>');
         $header = $("<h3>" + item.artist + "</h3>");
