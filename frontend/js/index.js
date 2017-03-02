@@ -107,6 +107,7 @@ $("#automplete-1").autocomplete({
     select: function(event, ui) {
       event.preventDefault();
       $("#automplete-1").val(ui.item.artist);
+
       $("#searchButton").prop("disabled", false);
       $("#searchButton").removeClass("btn-class-disabled");
       $("#searchButton").addClass("btn-class");

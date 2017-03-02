@@ -1,13 +1,15 @@
 
-var word = localStorage.getItem('word');
-word = word[0].toUpperCase() + word.slice(1);
 // localStorage.getItem('artist')
 var artist = "Drake";
 
 $(document).ready(function() {
 
   // Set the title of the Song List page
+  var songlist = localStorage.getItem('songlist');
+  var word = localStorage.getItem('word');
   document.getElementById("songListTitle").innerHTML = word;
+
+  console.log(so)
 
   // Populate song list
   var songs = [
@@ -15,19 +17,19 @@ $(document).ready(function() {
           frequency = ['10','9','8', '7', '6']
       ];
 
-  function makeOL(array1, array2) {
+  function makeOL() {
       // Create the list element
       var list = document.createElement('ol');
 
-      for(var i = 0; i < array1.length; i++) {
+      for (var key in songlist) {
           // Create the list item
           var item = document.createElement('li');
 
           // Set its contents
-          item.appendChild(document.createTextNode(array1[i] +" " + "(" + array2[i] + ")"));
+          item.appendChild(document.createTextNode(key +" " + "(" + songlist[key] + ")"));
 
           // Create link to respective lyrics page
-          item.addEventListener("click", loadSongLyricsPage(this, array1[i]), false);
+          item.addEventListener("click", loadSongLyricsPage(this, key), false);
 
           // Add it to the list
           list.appendChild(item);
@@ -38,7 +40,7 @@ $(document).ready(function() {
   }
 
   // Add the contents of songs[0] to #songList:
-  document.getElementById('songList').appendChild(makeOL(songs[0], songs[1]));
+  document.getElementById('songList').appendChild(makeOL());
 
 });
 
@@ -54,5 +56,5 @@ function loadSongLyricsPage(item, song) {
     localStorage.setItem('word', word);
     localStorage.setItem('artist', artist);
     window.location.href = "lyrics.html";
-}
+  }
 }
