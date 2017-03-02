@@ -5,22 +5,27 @@
 # In this file, we specify our application's HTTP routes 
 # and provide Closure callbacks to deal with user requests
 
-# helper variable so that we don't reinstantiate the cache
+# Helper variable so that we don't reinstantiate the cache
 
 # On landing route, store session-wide variables for future use
 # This includes instances of the API and Cache managers
 $app->get('/', function ($request, $response, $args) {
-	# if managers exist, return out of statement
+	# if managers do not exist, create them and place in session!
+	if (!isset($_SESSION['api']) && !isset($_SESSION['cache'])) {
+		# define new api manager
+		$api = new APIManager();
 
-	# define new api manager
-	$api = new APIManager();
+		# define new cache manager
+		$cache = new CacheManager();
 
-	# define new cache manager
-	$cache = new CacheManager();
+		# store managers in session
+		$_SESSION['api'] = serialize($api);
+		$_SESSION['cache'] = serialize($cache);
 
-	# store managers in session
-	$_SESSION['api'] = serialize($api);
-	$_SESSION['cache'] = serialize($cache);
+		# new response to return headers
+		$res = $response->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+		return $res;
+	}
 
 	# new response to return headers
 	$res = $response->withHeader('Access-Control-Allow-Origin', 'http://localhost:8081');

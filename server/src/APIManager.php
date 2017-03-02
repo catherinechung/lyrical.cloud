@@ -278,6 +278,13 @@ class APIManager {
 		// 	return $one[$kSetOne[0]]["frequency"] > $two[$kSetTwo[0]]["frequency"];
 		// });
 
+		usort($overall_list, function ($a, $b) {
+			$key_set_A = array_keys($a);
+			$key_set_B = array_keys($b);
+
+			return $a[$key_set_A[0]] < $b[$key_set_B[0]];
+		});
+
 		// Return overall list
 		return $overall_list;
 	}

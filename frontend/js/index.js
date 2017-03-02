@@ -38,7 +38,6 @@ $(document).ready(function() {
 $("#artistLabel").hide();
 
 $("#searchButton").click(function() {
-  console.log('down here');
   $('#vis').hide();
   document.getElementById("loader").style.display = "inline-block";
 
@@ -65,6 +64,28 @@ $("#searchButton").click(function() {
     }
   });
 
+});
+
+$("#addButton").click(function() {
+  $("#vis").show();
+
+  var $currentArtists = $("#artistLabel").text();
+  var $artistName = $("#automplete-1").val();
+  $artistName = $artistName[0].toUpperCase() + $artistName.slice(1);
+  $("#artistLabel").html($currentArtists + ", " + $artistName);
+
+  $.ajax({
+    type : 'GET',
+    url: 'http://localhost:8080/api/wordcloud/merge/' + $artistName,
+    dataType: 'jsonp',
+    success: function(data) {
+      tags = data;
+      update();
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
 });
 
 $("#shareButton").click(function() {
