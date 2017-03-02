@@ -17,11 +17,14 @@ $(document).ready(function() {
 
     // initial states
     $("#searchButton").prop("disabled", true);
+    $("#addButton").prop("disabled", true);
     $("#addButton").hide();
     $("#shareButton").hide();
   }
   else if(localStorage.getItem('searchState')) {
     $("#searchButton").prop("disabled", false);
+    $("#addButton").prop("disabled", false);
+
     $("#addButton").show();
     $("#shareButton").show();
 
@@ -109,19 +112,14 @@ $("#shareButton").click(function() {
 $("#automplete-1").keyup(function() {
 
   $("#searchButton").prop("disabled", true);
+  $("#addButton").prop("disabled", true);
 
   $("#searchButton").removeClass("btn-class");
   $("#searchButton").addClass("btn-class-disabled");
-});
 
-// TODO DELETE EXTRA//
-// removing extra characters
-$("#automplete-1").keyup(function() {
+  $("#addButton").removeClass("btn-class");
+  $("#addButton").addClass("btn-class-disabled");
 
-  $("#searchButton").prop("disabled", true);
-
-  $("#searchButton").removeClass("btn-class");
-  $("#searchButton").addClass("btn-class-disabled");
 });
 
 // call AJAX function
@@ -157,6 +155,10 @@ $("#automplete-1").autocomplete({
     $("#searchButton").prop("disabled", false);
     $("#searchButton").removeClass("btn-class-disabled");
     $("#searchButton").addClass("btn-class");
+
+    $("#addButton").prop("disabled", false);
+    $("#addButton").removeClass("btn-class-disabled");
+    $("#addButton").addClass("btn-class");
   },
   minLength: 3
 }).data("ui-autocomplete")._renderItem=function(ul, item) {
