@@ -49,6 +49,17 @@ $("#searchButton").click(function() {
 
 });
 
+$("#shareButton").click(function() {
+  
+  html2canvas(document.getElementById('vis')).then(function(canvas) {
+      var img = canvas.toDataURL();
+      console.log(img);
+      var url = "https://www.facebook.com/sharer/sharer.php?u=" + img + ";src=sdkpreparse";
+      window.open(url);
+    });
+
+});
+
 // adding any extra characters
 $("#automplete-1").keyup(function() {
 
