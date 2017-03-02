@@ -120,7 +120,7 @@ $("#automplete-1").autocomplete({
     select: function(event, ui) {
       event.preventDefault();
       $("#automplete-1").val(ui.item.artist);
-      artistID = ui.item.id);
+      artistID = ui.item.id;
 
       $("#searchButton").prop("disabled", false);
       $("#searchButton").removeClass("btn-class-disabled");
