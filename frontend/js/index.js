@@ -11,7 +11,7 @@ $(document).ready(function() {
 
   $("#vis").hide();
 
-  if(localStorage.getItem('searchState') == null) {
+  if(localStorage.getItem('searchState') == null || localStorage.getItem('searchState') == NO_SEARCH) {
     localStorage.setItem('searchState', NO_SEARCH);
 
     // initial states
