@@ -75,6 +75,20 @@ function draw(data, bounds) {
     text.on("click", datum => { 
         localStorage.setItem('word', datum["text"]);
         window.location.href = "songList.html";
+
+        $.ajax({
+            type : 'POST',
+            url: 'http://localhost:8080/api/songlist/'  + datum["text"],
+            dataType: 'jsonp',
+            success: function(data) {
+              tags = data;
+              update();
+            },
+            error: function(err) {
+              console.log(err);
+            }
+        });
+
         console.log(datum["text"]);
     });
     text.on("mouseover", function(d) {
