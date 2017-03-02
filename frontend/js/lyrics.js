@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var songName = localStorage.getItem('songName');
     var artist = localStorage.getItem('artist');
-    var word = " " + localStorage.getItem('word') + " ";
+    var word = localStorage.getItem('word');
     var lyrics;
 
     // query musixmatch given song and artist to get lyrics
