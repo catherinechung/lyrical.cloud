@@ -1,5 +1,5 @@
 <?php
-class CacheManager {
+final class CacheManager {
 
 	# holds overall freq cache (per currently searched artists)
 	private $overall_freq_cache = array();
@@ -9,6 +9,9 @@ class CacheManager {
 
 	# holds lifetime freq cache (per total lifetime of server)
 	private $lifetime_freq_cache = array();
+
+	# constructor
+	public function __construct() {}
 
 	# accessor helper function to access overall cache
 	public function overall_freq_cache() {
