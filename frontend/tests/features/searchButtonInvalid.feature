@@ -4,3 +4,4 @@ Feature: Search artist when there is no input
     And I do not input an artist
     When I press the search button
     Then I see no difference
+    And the search button is disabled
