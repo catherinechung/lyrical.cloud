@@ -41,9 +41,9 @@ class APIManager {
 			$img = $this->validate_image($suggestion);
 
 			$suggestion = array();
-			$suggestion[artist] = $name;
-			$suggestion[id] = $id;
-			$suggestion[img] = $img;
+			$suggestion['artist'] = $name;
+			$suggestion['id'] = $id;
+			$suggestion['img'] = $img;
 
 			$suggestions[] = $suggestion;
 		}
@@ -79,11 +79,11 @@ class APIManager {
 		$id = $this->get_artist_id($artist);
 		$albumIDs = $this->get_albums($id);
 		$songs = array();
-		$songs[artist] = $artist;
-		$songs[songs] = array();
+		$songs['artist'] = $artist;
+		$songs['songs'] = array();
 
 		foreach($albumIDs as $albumID) {
-			$this->get_songs_from_album($albumID, $songs[songs]);
+			$this->get_songs_from_album($albumID, $songs['songs']);
 		}
 
 		return $songs;
