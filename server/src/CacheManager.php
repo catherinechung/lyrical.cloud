@@ -23,6 +23,11 @@ final class CacheManager {
 		return $this->search_freq_cache;
 	}
 
+	# accessor helper function to access lifetime freq cache
+	public function lifetime_freq_cache() {
+		return $this->lifetime_freq_cache;
+	}
+
 	# does the search cache contain the artist?
 	public function contains($artist) {
 		return array_key_exists($artist, $this->lifetime_freq_cache);
