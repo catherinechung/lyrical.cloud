@@ -11,6 +11,8 @@ final class APIManagerTests extends TestCase {
 
 	// Test get_songs($artist) function
 	public function testGetSongs() {
+		echo "TEST NAME: testGetSongs \n \n";
+
 		$apiManager = new APIManager();
 		
 		// Example artist Nav
@@ -31,6 +33,8 @@ final class APIManagerTests extends TestCase {
 
 	// Test get_search_suggestions($search) function
 	public function testGetSearchSuggestions() {
+		echo "TEST NAME: testGetSearchSuggestions \n \n";
+
 		$apiManager = new APIManager();
 		
 		// Example artist Nav
@@ -57,6 +61,8 @@ final class APIManagerTests extends TestCase {
 
 	// Test get_track_id($artist, $track) function
 	public function testGetTrackID() {
+		echo "TEST NAME: testGetTrackID \n \n";
+
 		$apiManager = new APIManager();
 		
 		// Example artist, song, and verified track_id using https://market.mashape.com/musixmatch-com/musixmatch
@@ -75,6 +81,8 @@ final class APIManagerTests extends TestCase {
 
 	// Test get_lyrics($track_id) function
 	public function testGetLyrics() {
+		echo "TEST NAME: testGetLyrics \n \n";
+
 		$apiManager = new APIManager();
 		
 		// Example track ID for Drake - Hype using https://market.mashape.com/musixmatch-com/musixmatch
@@ -89,6 +97,8 @@ final class APIManagerTests extends TestCase {
 
 	// Test parse_song_lyrics($lyrics, $overall_freq) function
 	public function testParseSongLyrics() {
+		echo "TEST NAME: testParseSongLyrics \n \n";
+
 		$apiManager = new APIManager();
 		
 		// Example track ID for Drake - Hype using https://market.mashape.com/musixmatch-com/musixmatch
@@ -122,6 +132,8 @@ final class APIManagerTests extends TestCase {
 
 	// Test add_artist_to_wordcloud($songs, $cache) function
 	public function testAddArtistToWordCloud() {
+		echo "TEST NAME: testAddArtistToWordCloud \n \n";
+
 		$api = new APIManager();
 		$cache = new CacheManager();
 
@@ -143,6 +155,8 @@ final class APIManagerTests extends TestCase {
 
 	// Test get_song_list($word, $cache) function
 	public function testGetSongList() {
+		echo "TEST NAME: testGetSongList \n \n";
+
 		// Get managers
 		$api = new APIManager();
 		$cache = new CacheManager();
