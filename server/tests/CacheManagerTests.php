@@ -11,66 +11,81 @@ final class CacheManagerTest extends TestCase {
 
 	// Test overall_freq_cache() function
 	public function testOverallFrequencyCache() {
+		echo "TEST NAME: testOverallFrequencyCache \n \n";
 		$cache = new CacheManager();
 		$this->assertInternalType("array", $cache->overall_freq_cache());
-		echo "Overall Frequency Cache Type Test : Asserts Return Type to be Array\n";
+		echo "PASS - Overall Frequency Cache Type Test : Asserts Return Type to be Array\n";
+		echo "Code Coverage : 3/58 statements = 5.2% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test search_freq_cache() function
 	public function testSearchFrequencyCache() {
+		echo "TEST NAME: testSearchFrequencyCache \n \n";
 		$cache = new CacheManager();
 		$this->assertInternalType("array", $cache->search_freq_cache());
-		echo "Search Frequency Cache Type Test : Asserts Return Type to be Array\n";
+		echo "PASS - Search Frequency Cache Type Test : Asserts Return Type to be Array\n";
+		echo "Code Coverage : 3/58 statements = 5.2% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test lifetime_freq_cache() function
 	public function testLifetimeFrequencyCache() {
+		echo "TEST NAME: testLifetimeFrequencyCache \n \n";
 		$cache = new CacheManager();
 		$this->assertInternalType("array", $cache->lifetime_freq_cache());
-		echo "Lifetime Frequency Cache Type Test : Asserts Return Type to be Array\n";
+		echo "PASS - Lifetime Frequency Cache Type Test : Asserts Return Type to be Array\n";
+		echo "Code Coverage : 3/58 statements = 5.2% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test contains() function
 	public function testCacheContainsArtist() {
+		echo "TEST NAME: testCacheContainsArtist \n \n";
 		$cache = new CacheManager();
 		$cache->insert_into_lifetime_cache('test_input', 'test_entry');
 		$this->assertSame(isset($cache->lifetime_freq_cache()['test_input']), $cache->contains('test_input'));
-		echo "Cache Contains Artist Validity Test : Asserts that Field 'test_input' is Set in Lifetime Cache\n";
+		echo "PASS - Cache Contains Artist Validity Test : Asserts that Field 'test_input' is Set in Lifetime Cache\n";
 		$this->assertSame(isset($cache->lifetime_freq_cache()['not_test_input']), $cache->contains('not_test_input'));
-		echo "Cache Contains Artist Validity Test: Asserts that Field 'not_test_input' is not Set in Lifetime Cache\n";
+		echo "PASS - Cache Contains Artist Validity Test: Asserts that Field 'not_test_input' is not Set in Lifetime Cache\n";
+		echo "Code Coverage : 6/58 statements = 10.3% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test insert_into_search_cache() function
 	public function testInsertIntoSearchCache() {
+		echo "TEST NAME: testInsertIntoSearchCache \n \n";
 		$cache = new CacheManager();
 		$cache->insert_into_search_cache('test_input', 'test_entry');
 		$this->assertArrayHasKey('test_input', $cache->search_freq_cache());
-		echo "Insert Into Search Cache Validity Test : Asserts that Search Cache has Key 'test_input'\n";
+		echo "PASS - Insert Into Search Cache Validity Test : Asserts that Search Cache has Key 'test_input'\n";
 		$this->assertArrayNotHasKey('not_test_input', $cache->search_freq_cache());
-		echo "Insert Into Search Cache Validity Test : Asserts that Search Cache does not have Key 'not_test_input'\n";
+		echo "PASS - Insert Into Search Cache Validity Test : Asserts that Search Cache does not have Key 'not_test_input'\n";
+		echo "Code Coverage : 3/58 statements = 5.2% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test insert_into_lifetime_cache() function
 	public function testInsertIntoLifetimeCache() {
+		echo "TEST NAME: testInsertIntoLifetimeCache \n \n";
 		$cache = new CacheManager();
 		$cache->insert_into_lifetime_cache('test_input', 'test_entry');
 		$this->assertArrayHasKey('test_input', $cache->lifetime_freq_cache());
-		echo "Insert Into Lifetime Cache Validity Test : Asserts that Lifetime Cache has Key 'test_input'\n";
+		echo "PASS - Insert Into Lifetime Cache Validity Test : Asserts that Lifetime Cache has Key 'test_input'\n";
 		$this->assertArrayNotHasKey('not_test_input', $cache->lifetime_freq_cache());
-		echo "Insert Into Lifetime Cache Validity Test : Asserts that Lifetime Cache does not have Key 'not_test_input'\n";
+		echo "PASS - Insert Into Lifetime Cache Validity Test : Asserts that Lifetime Cache does not have Key 'not_test_input'\n";
+		echo "Code Coverage : 3/58 statements = 5.2% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test merge_into_overall_cache() function with small input size
 	public function testMergeIntoOverallCacheSmall() {
+		echo "TEST NAME: testMergeIntoOverallCacheSmall \n \n";
 		$cache = new CacheManager();
 		$test_input_small = array("a" => 10);
 		$cache->merge_into_overall_cache($test_input_small);
 		$this->assertSame($test_input_small, $cache->overall_freq_cache());
-		echo "Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Small-sized Input\n";
+		echo "PASS - Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Small-sized Input\n";
+		echo "Code Coverage : 4/58 statements = 6.9% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test merge_into_overall_cache() function with medium input size
 	public function testMergeIntoOverallCacheMedium() {
+		echo "TEST NAME: testMergeIntoOverallCacheMedium \n \n";
 		$cache = new CacheManager();
 		$test_input_small = array("a" => 10);
 		$cache->merge_into_overall_cache($test_input_small);
@@ -79,11 +94,13 @@ final class CacheManagerTest extends TestCase {
 		$cache->merge_into_overall_cache($test_input_medium);
 		$input_medium_expected_merge_result = array("j" => 212, "c" => 58, "h" => 41, "g" => 33, "f" => 27, "i" => 26, "b" => 11, "a" => 10, "e" => 4, "d" => 1);
 		$this->assertSame($input_medium_expected_merge_result, $cache->overall_freq_cache());
-		echo "Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Medium-sized Input\n";
+		echo "PASS - Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Medium-sized Input\n";
+		echo "Code Coverage : 4/58 statements = 6.9% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test merge_into_overall_cache() function with large input size
 	public function testMergeIntoOverallCacheLarge() {
+		echo "TEST NAME: testMergeIntoOverallCacheLarge \n \n";
 		$cache = new CacheManager();
 		$test_input_small = array("a" => 10);
 		$cache->merge_into_overall_cache($test_input_small);
@@ -94,11 +111,13 @@ final class CacheManagerTest extends TestCase {
 		$cache->merge_into_overall_cache($test_input_large);
 		$input_large_expected_merge_result = array("three" => 811, "k" => 505, "lucky" => 239, "vitamin" => 234, "pipes" => 228, "j" => 212, "apricot" => 178, "generator" => 164, "vibe" => 155, "gravity" => 132, "flow" => 92, "arms" => 87, "twenties" => 82, "foreign" => 77, "legends" => 74, "wake" => 72, "cash" => 69, "chalice" => 59, "c" => 58, "quiet" => 56, "like" => 55, "stars" => 54, "grand" => 47, "talkin" => 44, "girl" => 44, "rose" => 42, "h" => 41, "ends" => 40, "prophet" => 38, "lake" => 33, "g" => 33, "hey" => 32, "california" => 28, "f" => 27, "i" => 26, "cloud" => 22, "therefore" => 20, "dior" => 19, "four" => 14, "money" => 14, "dice" => 14, "go" => 12, "b" => 11, "do" => 11, "a" => 10, "checks" => 9, "wires" => 5, "benz" => 5, "clouds" => 4, "e" => 4, "make" => 3, "soul" => 2, "motivation" => 2, "d" => 1);
 		$this->assertSame($input_large_expected_merge_result, $cache->overall_freq_cache());
-		echo "Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Large-sized Input\n";
+		echo "PASS - Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Large-sized Input\n";
+		echo "Code Coverage : 4/58 statements = 6.9% | 0/4 branches = 0.0% \n \n";
 	}
 
 	// Test get_overall_frequencies() function with small input size
 	public function testGetOverallFrequenciesSmall() {
+		echo "TEST NAME: testGetOverallFrequenciesSmall \n \n";
 		$cache = new CacheManager();
 		$test_input_small = array(
 			array(
@@ -121,11 +140,13 @@ final class CacheManagerTest extends TestCase {
 		$expected_output_small = array(array("key" => "word_2", "value" => 10), array("key" => "word_1", "value" => 5), array("key" => "word_3", "value" => 5));
 		$overall_freq_map_artist_1 = $cache->get_overall_frequencies("artist_1");
 		$this->assertSame($expected_output_small, $overall_freq_map_artist_1);
-		echo "Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Small-sized Input\n";
+		echo "PASS - Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Small-sized Input\n";
+		echo "Code Coverage : 25/58 statements = 43.1% | 4/4 branches = 100.0% \n \n";
 	}
 
 	// Test get_overall_frequencies() function with medium input size
-	public function testGetOveerallFrequenciesMedium() {
+	public function testGetOverallFrequenciesMedium() {
+		echo "TEST NAME: testGetOverallFrequenciesMedium \n \n";
 		$cache = new CacheManager();
 		$test_input_medium = array(
 			array(
@@ -193,11 +214,13 @@ final class CacheManagerTest extends TestCase {
 	        	"value" => 37), array("key" => "word_54", "value" => 37), array("key" => "word_35", "value" => 36), array("key" => "word_7", "value" => 33), array("key" => "word_34", "value" => 32), array("key" => "word_33", "value" => 31), array("key" => "word_8", "value" => 30), array("key" => "word_2", "value" => 26), array("key" => "word_6", "value" => 22), array("key" => "word_36", "value" => 22), array("key" => "word_42", "value" => 12), array("key" => "word_32", "value" => 12), array("key" => "word_17", "value" => 12), array("key" => "word_1", "value" => 7), array("key" => "word_5", "value" => 3));
 		$overall_freq_map_artist_1 = $cache->get_overall_frequencies("artist_1");
 		$this->assertSame($expected_output_medium, $overall_freq_map_artist_1);
-		echo "Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Medium-sized Input\n";
+		echo "PASS - Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Medium-sized Input\n";
+		echo "Code Coverage : 25/58 statements = 43.1% | 4/4 branches = 100.0% \n \n";
 	}
 
 	// Test get_overall_frequencies() function with large input size
-	public function testGetOveerallFrequenciesLarge() {
+	public function testGetOverallFrequenciesLarge() {
+		echo "TEST NAME: testGetOverallFrequenciesLarge \n \n";
 		$cache = new CacheManager();
 		$test_input_large = array(
 			array(
@@ -290,7 +313,19 @@ final class CacheManagerTest extends TestCase {
 		);
 		$overall_freq_map_artist_1 = $cache->get_overall_frequencies("artist_1");
 		$this->assertSame($expected_output_large, $overall_freq_map_artist_1);
-		echo "Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Large-sized Input\n";
+		echo "PASS - Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Large-sized Input\n";
+		echo "Code Coverage : 25/58 statements = 43.1% | 4/4 branches = 100.0% \n \n";
+	}
+
+	// Test clear() function
+	public function testClear() {
+		echo "TEST NAME: testClear \n \n";
+		$cache = new CacheManager();
+		$cache->insert_into_search_cache("test_input", "test_entry");
+		$cache->clear();
+		$this->assertEmpty($cache->search_freq_cache());
+		echo "PASS - Clear Validity Test : Asserts that Cache Frequency Arrays are Empty After Cache is Cleared\n";
+		echo "Code Coverage : 4/58 statements = 5.2% | 0/4 branches = 0.0% \n \n";
 	}
 }
 ?>
