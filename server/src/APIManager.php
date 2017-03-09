@@ -20,6 +20,7 @@ class APIManager {
 
 	/* HELPER FUNCTIONS */
 
+	// 3
 	public function switchKeys() {
 	 	$this->mmKey = ("&apikey=" . $this->pool[array_rand($this->pool, 1)]);
 	}
@@ -29,6 +30,8 @@ class APIManager {
 	# get search suggestions for the given search input
 	# parameter: Search Input 
 	# return: Search Suggestions
+
+	// 31
 	public function get_search_suggestions($search) {
 		$response = file_get_contents($this->spAPI . "search?q={$search}&type=artist&limit=5");
 		$data = json_decode($response, true);
@@ -51,6 +54,7 @@ class APIManager {
 		return $suggestions;
 	}
 
+	// 6
 	private function validate_name($entry) {
 		if (isset($entry["name"])) {
 			return @$entry[name];
@@ -58,6 +62,7 @@ class APIManager {
 		return "";
 	}
 
+	// 6
 	private function validate_id($entry) {
 		if (isset($entry["id"])) {
 			return @$entry[id];
@@ -65,6 +70,7 @@ class APIManager {
 		return "";
 	}
 
+	// 6
 	private function validate_image($entry) {
 		if (isset($entry["images"]["2"]["url"])) {
 			return @$entry[images][2][url];
@@ -75,6 +81,8 @@ class APIManager {
 	# get all songs from an artist's discography
 	# parameter: Artist Name
 	# return: List of all songs by this artist
+	
+	// 47
 	public function get_songs($artist) {
 		$id = $this->get_artist_id($artist);
 		$albumIDs = $this->get_albums($id);
@@ -92,6 +100,8 @@ class APIManager {
 	# utility function to get encoded artist id
 	# parameter: Artist Name
 	# return: Spotify Artist ID
+
+	// 5
 	private function get_artist_id($artist) {
 		$response = file_get_contents($this->spAPI . "search?q={$artist}&type=artist&limit=1");
 		$data = json_decode($response, true);
@@ -102,6 +112,8 @@ class APIManager {
 	# get albums from an artist's discography
 	# parameter: Spotify Artist ID
 	# return: List of albums
+
+	// 19
 	private function get_albums($artistID) {
 		$response = file_get_contents($this->spAPI . "artists/{$artistID}/albums?limit=30");
 		$data = json_decode($response, true);
@@ -129,6 +141,8 @@ class APIManager {
 	# get songs from an artist's album
 	# parameter: Spotify Album ID
 	# return: List of songs in this album
+
+	// 12
 	private function get_songs_from_album($albumID, &$arr) {
 		$response = file_get_contents($this->spAPI . "albums/{$albumID}/tracks");
 		$data = json_decode($response, true);
@@ -147,6 +161,8 @@ class APIManager {
 	/* MUSIXMATCH API METHODS */
 
 	# get track id, given name of artist and track
+
+	// 6
 	public function get_track_id($artist, $track) {
 		// print_r($this->mmAPI . "track.search?q_track={$track}&q_artist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
 		$result = file_get_contents($this->mmAPI . "track.search?q_track={$track}&q_artist={$artist}&page_size=10&page=1&s_track_rating=desc" . $this->mmKey);
@@ -157,6 +173,8 @@ class APIManager {
 	}
 
 	# get name of song, given musix match id
+
+	// 5
 	private function get_song_name($track_id) {
 		$result = file_get_contents($this->mmAPI . "track.get?track_id={$track_id}" . $this->mmKey);
 		$data = json_decode($result, true);
@@ -165,6 +183,8 @@ class APIManager {
 	}
 
 	# get lyrics for track, given a spotify track id
+
+	// 12
 	public function get_lyrics($track_id) {
 		$result = file_get_contents($this->mmAPI . "track.lyrics.get?track_id={$track_id}" . $this->mmKey);
 		$lyrics_json = json_decode($result, true);
@@ -185,6 +205,7 @@ class APIManager {
 		return $lyrics;
 	}
 
+	// 24
 	public function parse_song_lyrics($lyrics, &$overall_freq) {
   		// Convert string to lowercase
 		$lyrics = strtolower($lyrics);
@@ -223,6 +244,7 @@ class APIManager {
 		return $frequency_counts;
 	}
 
+	// 67
 	public function add_artist_to_wordcloud($artist_info, &$cache) {
 		// Get info from param artist info
 		$artist_name = $artist_info["artist"];
@@ -267,6 +289,7 @@ class APIManager {
 		return (sizeof($overall_freq_formatted) >= 250) ? array_slice($overall_freq_formatted, 0, 250) : $overall_freq_formatted;
 	}
 
+	// 28
 	public function get_song_list($word, $search_freq_cache) {
 		// Overall song to frequency map
 		$overall_list = array();
