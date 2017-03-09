@@ -4,4 +4,4 @@ Feature: Clicking on a word will direct to song list page
     And a word cloud is generated
     When I click on a word
     Then I see localhost/songList.html
-    And the word is the heading
+    And the songListTitle is word
