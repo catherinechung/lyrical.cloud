@@ -9,66 +9,68 @@ final class CacheManagerTest extends TestCase {
 
 	# tests for CacheManager class
 
-	// Return type test of overall_freq_cache() function
-	public function testGetterReturnTypeForOverallFrequencyCache() {
+	// Test overall_freq_cache() function
+	public function testOverallFrequencyCache() {
 		$cache = new CacheManager();
 		$this->assertInternalType("array", $cache->overall_freq_cache());
-		echo "Overall Frequency Cache of CacheManager Class is of type Array\n";
+		echo "Overall Frequency Cache Type Test : Asserts Return Type to be Array\n";
 	}
 
-	// Return type test of search_freq_cache() function
-	public function testGetterReturnTypeForSearchFrequencyCache() {
+	// Test search_freq_cache() function
+	public function testSearchFrequencyCache() {
 		$cache = new CacheManager();
 		$this->assertInternalType("array", $cache->search_freq_cache());
-		echo "Search Frequency Cache of CacheManager Class is of type Array\n";
+		echo "Search Frequency Cache Type Test : Asserts Return Type to be Array\n";
 	}
 
-	// Return type test of search_freq_cache() function
-	public function testGetterReturnTypeForLifetimeFrequencyCache() {
+	// Test lifetime_freq_cache() function
+	public function testLifetimeFrequencyCache() {
 		$cache = new CacheManager();
 		$this->assertInternalType("array", $cache->lifetime_freq_cache());
-		echo "Lifetime Frequency Cache of CacheManager Class is of type Array\n";
+		echo "Lifetime Frequency Cache Type Test : Asserts Return Type to be Array\n";
 	}
 
-	// Function validity test of the contains() function
-	public function testValidityCacheContainsArtist() {
+	// Test contains() function
+	public function testCacheContainsArtist() {
 		$cache = new CacheManager();
 		$cache->insert_into_lifetime_cache('test_input', 'test_entry');
-		$this->assertSame(true, $cache->contains('test_input'));
-		$this->assertSame(false, $cache->contains('not_test_input'));
-		echo "Contains Function of CacheManager Class Returns 1 for test_input, 0 for not_test_input \n";
+		$this->assertSame(isset($cache->lifetime_freq_cache()['test_input']), $cache->contains('test_input'));
+		echo "Cache Contains Artist Validity Test : Asserts that Field 'test_input' is Set in Lifetime Cache\n";
+		$this->assertSame(isset($cache->lifetime_freq_cache()['not_test_input']), $cache->contains('not_test_input'));
+		echo "Cache Contains Artist Validity Test: Asserts that Field 'not_test_input' is not Set in Lifetime Cache\n";
 	}
 
-	// Function validity test of the insert_into_search_cache() function
-	public function testValidityInsertIntoSearchCache() {
+	// Test insert_into_search_cache() function
+	public function testInsertIntoSearchCache() {
 		$cache = new CacheManager();
 		$cache->insert_into_search_cache('test_input', 'test_entry');
 		$this->assertArrayHasKey('test_input', $cache->search_freq_cache());
+		echo "Insert Into Search Cache Validity Test : Asserts that Search Cache has Key 'test_input'\n";
 		$this->assertArrayNotHasKey('not_test_input', $cache->search_freq_cache());
-		echo "Insert Into Search Cache Function of CacheManager Class Returns 1 for test_input, 0 for not_test_input \n";
+		echo "Insert Into Search Cache Validity Test : Asserts that Search Cache does not have Key 'not_test_input'\n";
 	}
 
-	// Function validity test of the insert_into_lifetime_cache() function
-	public function testValidityInsertIntoLifetimeCache() {
+	// Test insert_into_lifetime_cache() function
+	public function testInsertIntoLifetimeCache() {
 		$cache = new CacheManager();
 		$cache->insert_into_lifetime_cache('test_input', 'test_entry');
 		$this->assertArrayHasKey('test_input', $cache->lifetime_freq_cache());
+		echo "Insert Into Lifetime Cache Validity Test : Asserts that Lifetime Cache has Key 'test_input'\n";
 		$this->assertArrayNotHasKey('not_test_input', $cache->lifetime_freq_cache());
-		echo "Insert Into Lifetime Cache Function of CacheManager Class Returns 1 for test_input, 0 for not_test_input \n";
+		echo "Insert Into Lifetime Cache Validity Test : Asserts that Lifetime Cache does not have Key 'not_test_input'\n";
 	}
 
-	// Function validity test of the merge_into_overall_cache() function with small input size
-	public function testValidityMergeIntoOverallCacheSmall() {
+	// Test merge_into_overall_cache() function with small input size
+	public function testMergeIntoOverallCacheSmall() {
 		$cache = new CacheManager();
 		$test_input_small = array("a" => 10);
 		$cache->merge_into_overall_cache($test_input_small);
 		$this->assertSame($test_input_small, $cache->overall_freq_cache());
-		echo "Merge Into Overall Cache Function of CacheManager Class Returns Correctly-Ordered Array for 
-			test_input_nominal, small input size \n";
+		echo "Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Small-sized Input\n";
 	}
 
-	// Function validity test of the merge_into_overall_cache() function with medium input size
-	public function testValidityMergeIntoOverallCacheMedium() {
+	// Test merge_into_overall_cache() function with medium input size
+	public function testMergeIntoOverallCacheMedium() {
 		$cache = new CacheManager();
 		$test_input_small = array("a" => 10);
 		$cache->merge_into_overall_cache($test_input_small);
@@ -77,12 +79,11 @@ final class CacheManagerTest extends TestCase {
 		$cache->merge_into_overall_cache($test_input_medium);
 		$input_medium_expected_merge_result = array("j" => 212, "c" => 58, "h" => 41, "g" => 33, "f" => 27, "i" => 26, "b" => 11, "a" => 10, "e" => 4, "d" => 1);
 		$this->assertSame($input_medium_expected_merge_result, $cache->overall_freq_cache());
-		echo "Merge Into Overall Cache Function of CacheManager Class Returns Correctly-Ordered Array for 
-			test_input_medium, medium input size \n";
+		echo "Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Medium-sized Input\n";
 	}
 
-	// Function validity test of the merge_into_overall_cache() function with large input size
-	public function testValidityMergeIntoOverallCacheLarge() {
+	// Test merge_into_overall_cache() function with large input size
+	public function testMergeIntoOverallCacheLarge() {
 		$cache = new CacheManager();
 		$test_input_small = array("a" => 10);
 		$cache->merge_into_overall_cache($test_input_small);
@@ -93,12 +94,11 @@ final class CacheManagerTest extends TestCase {
 		$cache->merge_into_overall_cache($test_input_large);
 		$input_large_expected_merge_result = array("three" => 811, "k" => 505, "lucky" => 239, "vitamin" => 234, "pipes" => 228, "j" => 212, "apricot" => 178, "generator" => 164, "vibe" => 155, "gravity" => 132, "flow" => 92, "arms" => 87, "twenties" => 82, "foreign" => 77, "legends" => 74, "wake" => 72, "cash" => 69, "chalice" => 59, "c" => 58, "quiet" => 56, "like" => 55, "stars" => 54, "grand" => 47, "talkin" => 44, "girl" => 44, "rose" => 42, "h" => 41, "ends" => 40, "prophet" => 38, "lake" => 33, "g" => 33, "hey" => 32, "california" => 28, "f" => 27, "i" => 26, "cloud" => 22, "therefore" => 20, "dior" => 19, "four" => 14, "money" => 14, "dice" => 14, "go" => 12, "b" => 11, "do" => 11, "a" => 10, "checks" => 9, "wires" => 5, "benz" => 5, "clouds" => 4, "e" => 4, "make" => 3, "soul" => 2, "motivation" => 2, "d" => 1);
 		$this->assertSame($input_large_expected_merge_result, $cache->overall_freq_cache());
-		echo "Merge Into Overall Cache Function of CacheManager Class Returns Correctly-Ordered Array for 
-			test_input_large, large input size \n";
+		echo "Merge Into Overall Cache Validity Test : Asserts that Overall Frequency Cache deep-equals Expected, Correctly-Ordered Output Array for Large-sized Input\n";
 	}
 
-	// Function validity test of the get_overall_frequencies() function with small input size
-	public function testValidityGetOverallFrequenciesSmall() {
+	// Test get_overall_frequencies() function with small input size
+	public function testGetOverallFrequenciesSmall() {
 		$cache = new CacheManager();
 		$test_input_small = array(
 			array(
@@ -121,11 +121,11 @@ final class CacheManagerTest extends TestCase {
 		$expected_output_small = array(array("key" => "word_2", "value" => 10), array("key" => "word_1", "value" => 5), array("key" => "word_3", "value" => 5));
 		$overall_freq_map_artist_1 = $cache->get_overall_frequencies("artist_1");
 		$this->assertSame($expected_output_small, $overall_freq_map_artist_1);
-		echo "Get Overall Frequencies Function of CacheManager Class Returns Correctly-Ordered Array of Overall Frequencies for Artist One, small input size \n";
+		echo "Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Small-sized Input\n";
 	}
 
-	// Function validity test of the get_overall_frequencies() function with medium input size
-	public function testValidityGetOveerallFrequenciesMedium() {
+	// Test get_overall_frequencies() function with medium input size
+	public function testGetOveerallFrequenciesMedium() {
 		$cache = new CacheManager();
 		$test_input_medium = array(
 			array(
@@ -193,11 +193,11 @@ final class CacheManagerTest extends TestCase {
 	        	"value" => 37), array("key" => "word_54", "value" => 37), array("key" => "word_35", "value" => 36), array("key" => "word_7", "value" => 33), array("key" => "word_34", "value" => 32), array("key" => "word_33", "value" => 31), array("key" => "word_8", "value" => 30), array("key" => "word_2", "value" => 26), array("key" => "word_6", "value" => 22), array("key" => "word_36", "value" => 22), array("key" => "word_42", "value" => 12), array("key" => "word_32", "value" => 12), array("key" => "word_17", "value" => 12), array("key" => "word_1", "value" => 7), array("key" => "word_5", "value" => 3));
 		$overall_freq_map_artist_1 = $cache->get_overall_frequencies("artist_1");
 		$this->assertSame($expected_output_medium, $overall_freq_map_artist_1);
-		echo "Get Overall Frequencies Function of CacheManager Class Returns Correctly-Ordered Array of Overall Frequencies for Artist One, medium input size \n";
+		echo "Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Medium-sized Input\n";
 	}
 
-	// Function validity test of the get_overall_frequencies() function with large input size
-	public function testValidityGetOveerallFrequenciesLarge() {
+	// Test get_overall_frequencies() function with large input size
+	public function testGetOveerallFrequenciesLarge() {
 		$cache = new CacheManager();
 		$test_input_large = array(
 			array(
@@ -290,7 +290,7 @@ final class CacheManagerTest extends TestCase {
 		);
 		$overall_freq_map_artist_1 = $cache->get_overall_frequencies("artist_1");
 		$this->assertSame($expected_output_large, $overall_freq_map_artist_1);
-		echo "Get Overall Frequencies Function of CacheManager Class Returns Correctly-Ordered Array of Overall Frequencies for Artist One, large input size \n";
+		echo "Get Overall Frequencies Validity Test : Asserts that Overall Frequencies Array for Artist deep-equals Expected, Correctly-Ordered Output Array for Large-sized Input\n";
 	}
 }
 ?>
