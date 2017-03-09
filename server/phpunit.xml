@@ -1,7 +1,0 @@
-<phpunit bootstrap="src/vendor/autoload.php">
-	<testsuites>
-		<testsuite name="PHP White-box Testing Suite">
-			<directory>tests</directory>
-		</testsuite>
-	</testsuites>
-</phpunit>
