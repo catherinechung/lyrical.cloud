@@ -1,34 +1,51 @@
-# lyrical.cloud
+lyrical.cloud
+=============
 
-Startup Instructions for System
+*What are your favorite artists really saying?*
 
-1st Terminal Window
+lyrical.cloud is a web-based application that can generate a colorful and fun word cloud of artists' most used lyrics.
 
-Navigate to the lyrical.cloud folder
+## Table of Contents
 
- cd server
+- [Purpose](#purpose)
+- [Installation](#installation)
+- [License](#license)
 
- php composer.phar install
+## Purpose
+ The objective of this web service is to provide a fast, coherent, and visually appealing representation of a given artist’s/artists’ lyrics, formatted as a word cloud and based on frequency count. 
+The main functionality of the application is centered around the generation of word clouds based on the lyrics of a single artist.
 
- php composer.phar start
+Additional functionality consists of:
+- The ability to share a word cloud to Facebook in a graphical format
+- Merge the lyrics of another artist into a currently-displaying word cloud
+- Explore the frequency of a certain word within the total discography of a certain artist/artists
+- Identify the usage of a certain word within a specific song 
 
+The web application will be freely available to any user with Internet access, a computer or mobile phone, and a browser that supports a JavaScript runtime engine. 
 
-2nd Terminal Window
+## Installation
+To run the system, open up a terminal window and navigate to the lyrical.cloud folder.
 
+```cd server```
 
-Navigate to the lyrical.cloud folder
+```php composer.phar install```
 
- sudo apt-get install nodejs-legacy
+```php composer.phar start```
 
- sudo apt-get install npm
+Open up a second terminal window and again, navigate to the lyrical.cloud folder.
 
- npm install -g http-server
+```sudo apt-get install nodejs-legacy```
 
- cd frontend
+```sudo apt-get install npm```
 
- http-server
+```npm install -g http-server```
 
+```cd frontend```
 
-Open up any browser
+```http-server```
 
-Type in localhost:8081
+Finally, open up any browser and type in `localhost:8081`
+
+## License
+MIT License: [LICENSE](https://github.com/catherinechung/lyrical.cloud/blob/master/License.md).
+
